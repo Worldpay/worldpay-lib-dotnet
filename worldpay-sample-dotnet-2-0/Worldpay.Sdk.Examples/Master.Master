@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="Worldpay.Sdk.Examples.Master" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>.NET 2.0 Library</title>
+        <script src="https://code.jquery.com/jquery-1.11.0.min.js"> </script>   
+        <style type="text/css">
+            body {
+                background: #efefef;
+                font-family: Verdana;
+            }
+
+            .container {
+                background: #fff;
+                margin: auto;
+                padding: 20px;
+                width: 800px;
+            }
+
+            .container h1 { text-align: center; }
+
+            .form-row { height: 50px; }
+
+            .form-row input {
+                height: 20px;
+                padding: 2px;
+                padding-left: 10px;
+            }
+
+            .form-row label {
+                display: inline-block;
+                padding-right: 10px;
+                text-align: right;
+                width: 200px;
+            }
+
+            input[type="radio"] + label {
+                padding-right: 10px;
+                text-align: left;
+                width: auto;
+            }
+
+            .form-row select {
+                height: 25px;
+                padding: 2px;
+                padding-left: 10px;
+            }
+
+            .payment-errors {
+                color: red;
+                font-size: 20px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                padding: 20px;
+                text-align: center;
+            }
+
+            .token { padding-top: 20px; }
+
+            #top-nav {
+                list-style: none;
+                text-align: center;
+            }
+
+            #top-nav li { display: inline-block; }
+
+            #top-nav li a {
+                color: blue;
+                padding-left: 15px;
+                padding-right: 10px;
+                text-decoration: none;
+            }
+
+            #top-nav li+li:before {
+                 content: "|";
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!--#include file="Navbar.aspx"-->
+
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+        
+            </asp:ContentPlaceHolder>
+        </div>
+        <br />
+        <div class="container">
+            <p>Library Version: <asp:Literal ID="LibraryVersion" runat="server" /></p>
+        </div>
+    </body>
+</html>
