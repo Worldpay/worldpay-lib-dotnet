@@ -19,7 +19,7 @@ namespace Worldpay.Sdk.Models
         public string paymentStatusReason { get; set; }
         
         [DataMember]
-        public AbstractPaymentMethod paymentResponse { get; set; }
+        public PaymentResponse paymentResponse { get; set; }
 
         [DataMember]
         public string customerOrderCode { get; set; }
