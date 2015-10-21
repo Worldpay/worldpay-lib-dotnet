@@ -1,4 +1,5 @@
-﻿using Worldpay.Sdk.Models;
+﻿using System.Collections.Generic;
+using Worldpay.Sdk.Models;
 
 namespace Worldpay.Sdk.Test
 {
@@ -35,5 +36,26 @@ namespace Worldpay.Sdk.Test
             TokenResponse response = authService.GetToken(tokenRequest);
             return response.token;
         }
+
+        /// <summary>
+        /// Create an APM token
+        /// </summary>
+        internal static string CreateAPMToken(AuthService authService)
+        {
+            var tokenRequest = new TokenRequest();
+            tokenRequest.clientKey = Configuration.ClientKey;
+
+            var cardRequest = new APMRequest();
+            cardRequest.type = "APM";
+            cardRequest.apmName = "PAYPAL";
+            cardRequest.shopperCountryCode = "GB";
+            cardRequest.apmFields = new Dictionary<string, string>();
+
+            tokenRequest.paymentMethod = cardRequest;
+
+            TokenResponse response = authService.GetToken(tokenRequest);
+            return response.token;
+        }
+
     }
 }

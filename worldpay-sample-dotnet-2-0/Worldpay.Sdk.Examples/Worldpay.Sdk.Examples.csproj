@@ -21,6 +21,7 @@
     <IISExpressUseClassicPipelineMode />
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,6 +65,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="APMCancel.aspx" />
+    <Content Include="APMFailure.aspx" />
+    <Content Include="APMPending.aspx" />
+    <Content Include="APMSuccess.aspx" />
     <Content Include="AuthorizeOrder.aspx" />
     <Content Include="CancelAuthorizedOrder.aspx" />
     <Content Include="CaptureAuthorizedOrder.aspx" />
@@ -85,6 +90,34 @@
     <Content Include="Webhook.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APMCancel.aspx.cs">
+      <DependentUpon>APMCancel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="APMCancel.aspx.designer.cs">
+      <DependentUpon>APMCancel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="APMFailure.aspx.cs">
+      <DependentUpon>APMFailure.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="APMFailure.aspx.designer.cs">
+      <DependentUpon>APMFailure.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="APMPending.aspx.cs">
+      <DependentUpon>APMPending.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="APMPending.aspx.designer.cs">
+      <DependentUpon>APMPending.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="APMSuccess.aspx.cs">
+      <DependentUpon>APMSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="APMSuccess.aspx.designer.cs">
+      <DependentUpon>APMSuccess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AuthorizeOrder.aspx.cs">
       <DependentUpon>AuthorizeOrder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

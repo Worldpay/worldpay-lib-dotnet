@@ -4,6 +4,7 @@
     {
         ECOM,
         RECURRING,
-        MOTO
+        MOTO,
+        APM
     }
 }

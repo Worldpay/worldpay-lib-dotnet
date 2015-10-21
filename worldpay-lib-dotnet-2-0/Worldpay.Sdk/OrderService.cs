@@ -59,8 +59,14 @@ namespace Worldpay.Sdk
         /// <returns>Confirmation of the captured order</returns>
         public OrderResponse CaptureAuthorizedOrder(string orderCode, int amount)
         {
-            return Http.Post<CaptureRequest, OrderResponse>(String.Format("{0}/orders/{1}/capture", _baseUrl, orderCode),
-                                                            new CaptureRequest { captureAmount = amount });
+            if (amount == 0)
+            {
+                return Http.Post<CaptureRequest, OrderResponse>(String.Format("{0}/orders/{1}/capture", _baseUrl, orderCode), null);
+            }
+            else
+            {
+                return Http.Post<CaptureRequest, OrderResponse>(String.Format("{0}/orders/{1}/capture", _baseUrl, orderCode),new CaptureRequest { captureAmount = amount });
+            }
         }
 
         /// <summary>

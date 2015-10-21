@@ -141,6 +141,25 @@ namespace Worldpay.Sdk.Test
         }
 
         /// <summary>
+        /// Verify that creating a APM order works
+        /// </summary>
+        [TestMethod]
+        public void ShouldCreateAPMOrder()
+        {
+            OrderRequest orderRequest = createAPMOrderRequest();
+            orderRequest.token = CreateAPMToken();
+
+            OrderResponse response = _orderService.Create(orderRequest);
+
+            Assert.IsNotNull(response.redirectURL);
+            Assert.IsNotNull(response.orderCode);
+            Assert.AreEqual(1999, response.amount);
+            Assert.IsFalse(response.is3DSOrder);
+
+            Assert.AreEqual(OrderStatus.PRE_AUTHORIZED, response.paymentStatus);
+        }
+
+        /// <summary>
         /// Vefiy that authorise 3DS Order works
         /// </summary>
         [TestMethod]
@@ -165,6 +184,16 @@ namespace Worldpay.Sdk.Test
            Assert.AreEqual(1999, authorizationResponse.amount);
            Assert.IsTrue(response.is3DSOrder);
            Assert.AreEqual(OrderStatus.SUCCESS, authorizationResponse.paymentStatus);
+        }
+
+        /// <summary>
+        /// Vefiy that authorise APM Order works
+        /// </summary>
+        [Ignore]
+        [TestMethod]
+        public void ShouldAuthoriseAPMOrder()
+        {
+           //We need to amend the simulator to auto submit the form and send notifications automatically in order to unit test this
         }
 
         /// <summary>
@@ -230,6 +259,11 @@ namespace Worldpay.Sdk.Test
             return TestHelpers.CreateToken(_authService);
         }
 
+        private string CreateAPMToken()
+        {
+            return TestHelpers.CreateAPMToken(_authService);
+        }
+
         /// <summary>
         /// Create an order request
         /// </summary>
@@ -249,9 +283,8 @@ namespace Worldpay.Sdk.Test
             address.postalCode = "AB1 2CD";
             orderRequest.billingAddress = address;
 
-            var customerIdentifiers = new List<Entry>();
-            var entry = new Entry("test key 1", "test value 1");
-            customerIdentifiers.Add(entry);
+            var customerIdentifiers = new Dictionary<string, string>();
+            customerIdentifiers.Add("test key 1", "test value 1");
 
             orderRequest.customerIdentifiers = customerIdentifiers;
             return orderRequest;
@@ -284,9 +317,40 @@ namespace Worldpay.Sdk.Test
             address.postalCode = "AB1 2CD";
             orderRequest.billingAddress = address;
 
-            var customerIdentifiers = new List<Entry>();
-            var entry = new Entry("test key 1", "test value 1");
-            customerIdentifiers.Add(entry);
+            var customerIdentifiers = new Dictionary<string, string>();
+            customerIdentifiers.Add("test key 1", "test value 1");
+
+            orderRequest.customerIdentifiers = customerIdentifiers;
+            return orderRequest;
+        }
+
+        /// <summary>
+        /// Create a APM order request
+        /// </summary>
+        private OrderRequest createAPMOrderRequest()
+        {
+            var orderRequest = new OrderRequest();
+            orderRequest.amount = 1999;
+            orderRequest.successUrl = "http://www.testurl.com/success";
+            orderRequest.cancelUrl = "http://www.testurl.com/cancel";
+            orderRequest.failureUrl = "http://www.testurl.com/failure";
+            orderRequest.pendingUrl = "http://www.testurl.com/pending";
+
+            orderRequest.currencyCode = CurrencyCode.GBP;
+            orderRequest.name = "Test";
+            orderRequest.orderDescription = "test description";
+            orderRequest.is3DSOrder = false;
+
+            var address = new Address();
+            address.address1 = "line 1";
+            address.address2 = "line 2";
+            address.city = "city";
+            address.countryCode = CountryCode.GB;
+            address.postalCode = "AB1 2CD";
+            orderRequest.billingAddress = address;
+
+            var customerIdentifiers = new Dictionary<string, string>();
+            customerIdentifiers.Add("test key 1", "test value 1");
 
             orderRequest.customerIdentifiers = customerIdentifiers;
             return orderRequest;

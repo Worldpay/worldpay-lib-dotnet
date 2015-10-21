@@ -24,5 +24,9 @@ namespace Worldpay.Sdk.Models
         public Dictionary<string, string> customerIdentifiers { get; set; }
 
         public Environment environment { get; set; }
+
+        public string shopperEmailAddress { get; set; }
+
+        public DeliveryAddress deliveryAddress { get; set; }
     }
 }

@@ -6,6 +6,9 @@ namespace Worldpay.Sdk.Models
     abstract public class AbstractCard : AbstractPaymentMethod
     {
         [DataMember]
+        public string name { get; set; }
+
+        [DataMember]
         public int expiryMonth { get; set; }
 
         [DataMember]

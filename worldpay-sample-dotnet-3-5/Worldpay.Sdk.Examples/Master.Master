@@ -22,6 +22,22 @@
             .container h1 { text-align: center; }
 
             .form-row { height: 50px; }
+            
+            .form-row.large { height: 150px; }
+
+            .apm-url input { width: 350px; }
+
+            .form-row textarea {
+	           resize:none;
+	        }
+
+            .header {
+                font-weight: bold;
+                width: 800px;
+                height: 35px;
+                margin: 0 auto 20px;
+                border-bottom: 1px solid #D0D0D0;
+            }
 
             .form-row input {
                 height: 20px;

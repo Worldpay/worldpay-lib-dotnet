@@ -21,6 +21,7 @@ namespace Worldpay.Sdk.Test
             Assert.IsNotNull(response);
         }
 
+        [Ignore]
         [TestMethod]
         public void TestGetTransfer()
         {

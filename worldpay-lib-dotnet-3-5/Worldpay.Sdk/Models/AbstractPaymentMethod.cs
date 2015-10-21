@@ -7,11 +7,5 @@ namespace Worldpay.Sdk.Models
     {
         [DataMember]
         public string type { get; set; }
-
-        [DataMember]
-        public string name { get; set; }
-
-        [DataMember]
-        public Address address { get; set; }
     }
 }

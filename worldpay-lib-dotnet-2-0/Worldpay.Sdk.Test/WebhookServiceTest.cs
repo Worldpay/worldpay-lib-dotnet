@@ -12,6 +12,7 @@ namespace Worldpay.Sdk.Test
     [TestClass]
     public class WebhookServiceTest
     {
+        [Ignore]
         [TestMethod]
         public void shouldLogOrderStatus()
         {

@@ -54,11 +54,13 @@
     <Compile Include="Models\BaseMerchant.cs" />
     <Compile Include="Models\BusinessProfile.cs" />
     <Compile Include="Models\CaptureRequest.cs" />
+    <Compile Include="Models\APMRequest.cs" />
     <Compile Include="Models\CardRequest.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Enums\CountryCode.cs" />
     <Compile Include="Enums\CurrencyCode.cs" />
     <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\DeliveryAddress.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Enums\Environment.cs" />
     <Compile Include="Http.cs" />

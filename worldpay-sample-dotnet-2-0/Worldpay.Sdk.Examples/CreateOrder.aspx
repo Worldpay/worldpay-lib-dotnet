@@ -4,28 +4,76 @@
 
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <script type="text/javascript" src="<%= Session["js_endpoint"] %>"></script>
-    <form id="paymentForm" runat="server">
+    <form id="aspnetForm" runat="server">
         <h1>.NET 2.0 Library Create Order Example</h1>
-
+            
         <asp:Panel runat="server" ID="RequestPanel">
             <div class="payment-errors"></div>
+            <div class="header">Checkout</div>
+
+            <div class="form-row">
+                <label>Order Type</label>
+                <select id="orderType" name="orderType">
+                    <option value="ECOM" selected="selected">ECOM</option>
+                    <option value="RECURRING">RECURRING</option>
+                    <option value="MOTO">MOTO</option>
+                    <option value="APM">APM</option>
+                </select>
+            </div>
+
+            <div class="form-row apm" style="display:none;">
+                <label>APM</label>
+                <select id="apm-name" data-worldpay="apm-name">
+                    <option value="paypal" selected="selected">PayPal</option>
+                    <option value="giropay">Giropay</option>
+                </select>
+            </div>
+
             <div class="form-row">
                 <label>Name</label>
                 <input type="text" id="name" name="name" data-worldpay="name" value="Example Name" />
             </div>
 
-            <div class="form-row">
-                <label>Card Number</label>
-                <input type="text" id="card" size="20" data-worldpay="number" value="4444333322221111" />
-
+            <div class="form-row apm apm-url" style="display:none;">
+                <label>
+                    Success URL
+                </label>
+                <input type="text" id="success-url" name="success-url" placeholder='<%Response.Write( Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/apmSuccess.aspx");%>'/>
             </div>
 
-            <div class="form-row">
+             <div class="form-row apm apm-url" style="display:none;">
+                <label>
+                    Cancel URL
+                </label>
+                <input type="text" id="cancel-url" name="cancel-url" placeholder='<%Response.Write( Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/apmCancel.aspx");%>'/>
+            </div>
+
+             <div class="form-row apm apm-url" style="display:none;">
+                <label>
+                    Failure URL
+                </label>
+                <input type="text" id="failure-url" name="failure-url" placeholder='<%Response.Write( Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/apmFailure.aspx");%>'/>
+            </div>
+
+             <div class="form-row apm apm-url" style="display:none;">
+                <label>
+                    Pending URL
+                </label>
+                <input type="text" id="pending-url" name="pending-url" placeholder='<%Response.Write( Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/apmPending.aspx");%>'/>
+            </div>
+
+            <div class="form-row no-apm">
+                <label>Card Number</label>
+                <input type="text" id="card" size="20" data-worldpay="number" value="4444333322221111" />
+            </div>
+            
+            
+            <div class="form-row no-apm">
                 <label>CVC</label>
                 <input type="text" id="cvc" size="4" data-worldpay="cvc" value="321" />
             </div>
 
-            <div class="form-row">
+            <div class="form-row no-apm">
                 <label>Expiration (MM/YYYY)</label>
                 <select id="expiration-month" data-worldpay="exp-month">
                     <option value="01">01</option>
@@ -63,6 +111,24 @@
                 <input type="text" id="currency" name="currency" value="GBP" />
             </div>
 
+
+            <div class="form-row reusable-token-row">
+                <label>Reusable Token</label>
+                <input type="checkbox" id="chkReusable" />
+            </div>
+
+            <div class="form-row no-apm">
+                <label>Use 3DS</label>
+                <input type="checkbox" id="chk3Ds" name="3ds" />
+            </div>
+
+            <div class="form-row no-apm">
+                <label>Authorise Only</label>
+                <input type="checkbox" id="chkAuthoriseOnly" name="authoriseOnly" />
+            </div>
+
+            <div class="header">Billing address</div>
+
             <div class="form-row">
                 <label>Address 1</label>
                 <input type="text" id="address1" name="address1" value="123 House Road" />
@@ -93,33 +159,103 @@
                 <input type="text" id="country-code" name="countryCode" value="GB" />
             </div>
 
+            <div class="header">Delivery address</div>
             <div class="form-row">
-                <label>Description</label>
+                <label>
+                    First Name
+                </label>
+                <input type="text" id="delivery-first-name" name="delivery-firstName" value="John" />
+            </div>
+            <div class="form-row">
+                <label>
+                    Last Name
+                </label>
+                <input type="text" id="delivery-last-name" name="delivery-lastName" value="Doe" />
+            </div>
+            <div class="form-row">
+                <label>
+                    Address 1
+                </label>
+                <input type="text" id="delivery-address1" name="delivery-address1" value="123 House Road" />
+            </div>
+
+            <div class="form-row">
+                <label>
+                    Address 2
+                </label>
+                <input type="text" id="delivery-address2" name="delivery-address2" value="A village" />
+            </div>
+
+            <div class="form-row">
+                <label>
+                    Address 3
+                </label>
+                <input type="text" id="delivery-address3" name="delivery-address3" value="" />
+            </div>
+
+            <div class="form-row">
+                <label>
+                    City
+                </label>
+                <input type="text" id="delivery-city" name="delivery-city" value="London" />
+            </div>
+
+            <div class="form-row">
+                <label>
+                    Postcode
+                </label>
+                <input type="text" id="delivery-postcode" name="delivery-postcode" value="EC1 1AA" />
+            </div>
+
+            <div class="form-row">
+                <label>
+                    Country Code
+                </label>
+                <input type="text" id="delivery-country-code" name="delivery-countryCode" value="GB" />
+            </div>
+
+            <div class="header">Other</div>
+
+            <div class="form-row">
+                <label>Order Description</label>
                 <input type="text" id="description" name="description" value="My test order" />
             </div>
 
             <div class="form-row">
-                <label>Reusable Token</label>
-                <input type="checkbox" id="chkReusable" />
+                <label>
+                    Statement Narrative
+                </label>
+                <input type="text" id="statement-narrative" maxlength="24" name="statement-narrative" value="Statement Narrative" />
+            </div>
+
+            <div class="form-row language-code-row">
+                <label>Shopper Language Code</label>
+                <input type="text" id="language-code" maxlength="2" data-worldpay="language-code" value="EN" />
             </div>
 
             <div class="form-row">
-                <label>Use 3DS</label>
-                <input type="checkbox" id="chk3Ds" name="3ds" />
+                <label>Shopper Email</label>
+                <input type="text" id="shopper-email" name="shopper-email" value="shopper@email.com" />
             </div>
 
-            <div class="form-row">
-                <label>Authorise Only</label>
-                <input type="checkbox" id="chkAuthoriseOnly" name="authoriseOnly" />
+
+            <div class="form-row swift-code-row apm" style="display:none">
+                <label>
+                    Swift Code
+                </label>
+                <input type="text" id="swift-code" value="NWBKGB21" />
             </div>
+
+            <div class="form-row large">
+                <label class='left'>
+                    Customer Identifiers (json)
+                </label>
+                <textarea id="customer-identifiers" rows="6" cols="30" name="customer-identifiers"></textarea>
+            </div>
+
+            <div class="apmName apm"></div>
+
             <input name="env" type="hidden" value=""/>
-
-            <div class="form-row">
-                <label>Order Type</label>
-                <input type="radio" id="ecom" name="radOrderType" value="ECOM" checked /><label for="ecom" class="radlabel">ECOM</label>
-                <input type="radio" id="recurring" name="radOrderType" value="RECURRING" /><label for="recurring" class="radlabel">RECURRING</label>
-                <input type="radio" id="moto" name="radOrderType" value="MOTO" /><label for="moto" class="radlabel">MOTO</label>
-            </div>
             <div>
                 <asp:Button ID="PlaceOrder" runat="server" Text="Place Order" />
             </div>
@@ -140,15 +276,6 @@
         Worldpay.setClientKey('<%= Session["client_key"] %>');
         Worldpay.api_path = '<%= Session["apiendpoint"] %>';
 
-        $('#chkReusable').change(function () {
-            if ($(this).is(':checked')) {
-                Worldpay.reusable = true;
-            }
-            else {
-                Worldpay.reusable = false;
-            }
-        });
-
         // This is required as .NET 2.0 doesn't have ClientIDMode="static", so we can't set the form's id to anything
         // other than "aspnetForm"
         var form = document.getElementById('aspnetForm');
@@ -162,6 +289,80 @@
                 form.submit();
             }
 
+        });
+
+        $('#chkReusable').prop('checked', false);
+        $('#chkReusable').change(function () {
+            if ($(this).is(':checked') && $('#apm-name').val() != 'giropay') {
+                Worldpay.reusable = true;
+            }
+            else {
+                Worldpay.reusable = false;
+            }
+        });
+
+
+        $('#orderType').on('change', function () {
+            if ($(this).val() == 'APM') {
+                Worldpay.tokenType = 'apm';
+                $('.apm').show();
+                $('.no-apm').hide();
+
+                //initialize swift code field
+                $('#swift-code').removeAttr('data-worldpay-apm');
+                $('.swift-code-row').hide();
+                $('.reusable-token-row').show();
+                $('#language-code').attr('data-worldpay', 'language-code');
+                $('.language-code-row').show();
+
+                //handle attributes
+                $('#card').removeAttr('data-worldpay');
+                $('#cvc').removeAttr('data-worldpay');
+                $('#expiration-month').removeAttr('data-worldpay');
+                $('#expiration-year').removeAttr('data-worldpay');
+                $('#country-code').attr('data-worldpay', 'country-code');
+            } else {
+                Worldpay.tokenType = 'card';
+                $('.apm').hide();
+                $('.no-apm').show();
+                $('#card').attr('data-worldpay', 'number');
+                $('#cvc').attr('data-worldpay', 'cvc');
+                $('#expiration-month').attr('data-worldpay', 'exp-month');
+                $('#expiration-year').attr('data-worldpay', 'exp-year');
+                $('#country-code').removeAttr('data-worldpay');
+            }
+
+        });
+
+        $('#apm-name').on('change', function () {
+            if ($(this).val() == 'giropay') {
+                Worldpay.reusable = false;
+                $('#swift-code').attr('data-worldpay-apm', 'swiftCode');
+                $('.swift-code-row').show();
+
+                //No language code for Giropay
+                $('#language-code').removeAttr('data-worldpay');
+                $('.language-code-row').hide();
+
+                //Reusable token option is not available for Giropay
+                $('.reusable-token-row').hide();
+
+                //Set acceptance currency to EUR
+                $('#currency').val('EUR');
+            }
+            else {
+                //we don't want to send swift code to the api if the apm is not Giropay
+                $('#swift-code').removeAttr('data-worldpay-apm');
+                $('.swift-code-row').hide();
+                $('.reusable-token-row').show();
+
+                //language code enabled by default
+                $('#language-code').attr('data-worldpay', 'language-code');
+                $('.language-code-row').show();
+
+                //Set acceptance currency to GBP
+                $('#currency').val('GBP');
+            }
         });
     </script>
 </asp:Content>

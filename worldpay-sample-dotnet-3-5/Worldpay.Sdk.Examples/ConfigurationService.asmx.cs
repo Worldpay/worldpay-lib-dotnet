@@ -10,7 +10,7 @@ namespace Worldpay.Sdk.Examples
         [WebMethod(EnableSession = true)]
         public string Test(string apiEndpoint, string jsEndpoint, string serviceKey, string clientKey)
         {
-            Session["apiendpoint"] = apiEndpoint;
+            Session["apiEndpoint"] = apiEndpoint;
             Session["js_endpoint"] = jsEndpoint;
             Session["service_key"] = serviceKey;
             Session["client_key"] = clientKey;

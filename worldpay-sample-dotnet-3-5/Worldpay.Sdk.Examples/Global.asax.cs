@@ -15,7 +15,7 @@ namespace Worldpay.Sdk.Examples
         protected void Session_Start(object sender, EventArgs e)
         {
             // Set configuration to default values
-            Session["apiendpoint"] = Configuration.BaseUrl;
+            Session["apiEndpoint"] = Configuration.BaseUrl;
             Session["js_endpoint"] = ConfigurationManager.AppSettings["JsEndpoint"];
             Session["service_key"] = Configuration.ServiceKey;
             Session["client_key"] = Configuration.ClientKey;

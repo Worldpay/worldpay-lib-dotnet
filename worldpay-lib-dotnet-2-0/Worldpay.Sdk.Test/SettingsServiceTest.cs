@@ -8,7 +8,7 @@ namespace Worldpay.Sdk.Test
     {
         private SettingsService _settingsService;
 
-        private const string MerchantId = "6406251b-f8f9-4355-91d9-085283e86ddd";
+        private const string MerchantId = "01346fe3-86b7-40d4-9406-a4646e9fa520";
 
         [TestInitialize]
         public void Setup()
@@ -25,6 +25,7 @@ namespace Worldpay.Sdk.Test
             Assert.IsNotNull(settings);
         }
 
+        [Ignore]
         [TestMethod]
         public void TestUpdateBillingSettings()
         {

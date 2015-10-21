@@ -19,7 +19,7 @@ namespace Worldpay.Sdk.Models
         public string paymentStatusReason { get; set; }
         
         [DataMember]
-        public AbstractPaymentMethod paymentResponse { get; set; }
+        public PaymentResponse paymentResponse { get; set; }
 
         [DataMember]
         public string customerOrderCode { get; set; }
@@ -33,10 +33,17 @@ namespace Worldpay.Sdk.Models
         [DataMember]
         public string redirectURL { get; set; }
 
-        [DataMember, JsonConverter(typeof(EntryConverter))]
-        public List<Entry> customerIdentifiers { get; set; }
+        [DataMember]
+        public Dictionary<string, string> customerIdentifiers { get; set; }
 
         [DataMember]
         public Environment environment { get; set; }
+
+        [DataMember]
+        public string shopperEmailAddress { get; set; }
+
+        [DataMember]
+        public DeliveryAddress deliveryAddress { get; set; }
+
     }
 }

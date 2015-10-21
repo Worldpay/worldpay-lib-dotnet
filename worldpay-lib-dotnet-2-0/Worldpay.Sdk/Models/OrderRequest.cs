@@ -16,6 +16,8 @@ namespace Worldpay.Sdk.Models
 
         public Address billingAddress { get; set; }
 
+        public DeliveryAddress deliveryAddress { get; set; }
+
         public Dictionary<string, string> customerIdentifiers { get; set; }
 
         public string customerOrderCode { get; set; }
@@ -49,5 +51,16 @@ namespace Worldpay.Sdk.Models
         }
 
         public bool is3DSOrder { get; set; }
+
+        public string successUrl { get; set; }
+
+        public string failureUrl { get; set; }
+
+        public string cancelUrl { get; set; }
+
+        public string pendingUrl { get; set; }
+
+        public string shopperEmailAddress { get; set; }
+
     }
 }

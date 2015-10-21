@@ -2,6 +2,8 @@
 {
     abstract public class AbstractCard : AbstractPaymentMethod
     {
+        public string name { get; set; }
+
         public int expiryMonth { get; set; }
 
         public int expiryYear { get; set; }

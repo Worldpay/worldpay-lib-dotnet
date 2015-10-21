@@ -18,7 +18,13 @@ namespace Worldpay.Sdk.Examples
             var client = new WorldpayRestClient(Configuration.ServiceKey);
 
             var orderCode = form["orderCode"];
-            var amount = Int32.Parse(form["amount"]);
+            var amount = 0;
+
+            try
+            {
+                amount = Int32.Parse(form["amount"]);
+            }
+            catch (Exception exc) { }
 
             try
             {

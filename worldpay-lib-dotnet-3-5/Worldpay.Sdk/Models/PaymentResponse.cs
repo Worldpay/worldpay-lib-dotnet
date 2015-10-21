@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Worldpay.Sdk.Json;
 
 namespace Worldpay.Sdk.Models
 {
@@ -14,5 +17,8 @@ namespace Worldpay.Sdk.Models
 
         [DataMember]
         public Address billingAddress { get; set; }
+
+        [DataMember, JsonConverter(typeof(EntryConverter))]
+        public List<Entry> apmFields { get; set; }
     }
 }

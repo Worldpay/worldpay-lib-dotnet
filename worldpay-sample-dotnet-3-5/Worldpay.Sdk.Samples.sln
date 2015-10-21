@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 14 for Web
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worldpay.Sdk.Examples", "Worldpay.Sdk.Examples\Worldpay.Sdk.Examples.csproj", "{C1E26FE7-56C2-446D-A65A-830D8747758B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6C59865C-07ED-4BD8-99D8-4A8BAE7BF16C}"

@@ -21,9 +21,12 @@ namespace Worldpay.Sdk.Models
 
         [DataMember]
         public Address billingAddress { get; set; }
+        
+        [DataMember]
+        public DeliveryAddress deliveryAddress { get; set; }
 
-        [DataMember, JsonConverter(typeof(EntryConverter))]
-        public List<Entry> customerIdentifiers { get; set; }
+        [DataMember]
+        public Dictionary<string, string> customerIdentifiers { get; set; }
 
         [DataMember]
         public string customerOrderCode { get; set; }
@@ -51,5 +54,21 @@ namespace Worldpay.Sdk.Models
 
         [DataMember]
         public bool is3DSOrder { get; set; }
+
+        [DataMember]
+        public string successUrl { get; set; }
+
+        [DataMember]
+        public string failureUrl { get; set; }
+
+        [DataMember]
+        public string cancelUrl { get; set; }
+
+        [DataMember]
+        public string pendingUrl { get; set; }
+
+        [DataMember]
+        public string shopperEmailAddress { get; set; }
+
     }
 }

@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using Worldpay.Sdk.Examples;
 using Worldpay.Sdk.Enums;
 using Worldpay.Sdk.Models;
+using Newtonsoft.Json;
 
 namespace Worldpay.Sdk.Examples
 {
@@ -24,7 +25,25 @@ namespace Worldpay.Sdk.Examples
         protected void OnCreateOrder(object sender, CommandEventArgs e)
         {
             var form = HttpContext.Current.Request.Form;
+            var orderType = (OrderType)Enum.Parse(typeof(OrderType), form["orderType"]);
+
+            if (orderType == OrderType.APM)
+            {
+                createAPMOrder();
+                return;
+            }
+            else
+            {
+                createOrder();
+                return;
+            }
+        }
+
+        private void createOrder()
+        {
+            var form = HttpContext.Current.Request.Form;
             var client = new WorldpayRestClient((string)Session["service_key"]);
+            var orderType = (OrderType)Enum.Parse(typeof(OrderType), form["orderType"]);
 
             var cardRequest = new CardRequest();
             cardRequest.cardNumber = form["number"];
@@ -33,6 +52,14 @@ namespace Worldpay.Sdk.Examples
             cardRequest.expiryMonth = Convert.ToInt32(form["exp-month"]);
             cardRequest.expiryYear = Convert.ToInt32(form["exp-year"]);
             cardRequest.type = form["cardType"];
+
+            Dictionary<string, string> custIdentifiers = new Dictionary<string, string>();
+            try
+            {
+                custIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
+
+            }
+            catch (Exception exc) { }
 
             var billingAddress = new Address()
             {
@@ -43,6 +70,19 @@ namespace Worldpay.Sdk.Examples
                 city = form["city"],
                 state = "",
                 countryCode = Enum.Parse(typeof(CountryCode), form["countryCode"]).ToString()
+            };
+
+            var deliveryAddress = new DeliveryAddress()
+            {
+                firstName = form["delivery-firstName"],
+                lastName = form["delivery-lastName"],
+                address1 = form["delivery-address1"],
+                address2 = form["delivery-address2"],
+                address3 = form["delivery-address3"],
+                postalCode = form["delivery-postcode"],
+                city = form["delivery-city"],
+                state = "",
+                countryCode = Enum.Parse(typeof(CountryCode), form["delivery-countryCode"]).ToString()
             };
 
             var is3DS = form["3ds"] == "on" ? true : false;
@@ -59,8 +99,6 @@ namespace Worldpay.Sdk.Examples
                 };
             }
 
-            var orderType = (OrderType) Enum.Parse(typeof (OrderType), form["radOrderType"]);
-
             var request = new OrderRequest()
             {
                 token = form["token"],
@@ -68,13 +106,88 @@ namespace Worldpay.Sdk.Examples
                 amount = (int)(Convert.ToDecimal(form["amount"]) * 100),
                 currencyCode = Enum.Parse(typeof(CurrencyCode), form["currency"]).ToString(),
                 name =  is3DS ? "3D" : form["name"],
+                shopperEmailAddress = form["shopper-email"],
                 billingAddress = billingAddress,
+                deliveryAddress = deliveryAddress,
                 threeDSecureInfo = is3DS ? threeDSInfo : new ThreeDSecureInfo(),
                 is3DSOrder = is3DS,
                 authorizeOnly = form["authoriseOnly"] == "on",
                 orderType = orderType.ToString(),
-                customerIdentifiers = new Dictionary<string, string> { { "my-customer-ref", "customer-ref" } },
+                customerIdentifiers = custIdentifiers,
                 customerOrderCode = "A123"
+            };
+
+            try
+            {
+                var response = client.GetOrderService().Create(request);
+
+                HandleSuccessResponse(response);
+
+                SuccessPanel.Visible = true;
+            }
+            catch (WorldpayException exc)
+            {
+                ErrorControl.DisplayError(exc.apiError);
+            }
+            catch (Exception exc)
+            {
+                throw new InvalidOperationException("Error sending request with token " + request.token, exc);
+            }
+        }
+
+        private void createAPMOrder()
+        {
+            var form = HttpContext.Current.Request.Form;
+            var client = new WorldpayRestClient((string)Session["service_key"]);
+            Dictionary<string, string> custIdentifiers = new Dictionary<string, string>();
+
+            try
+            {
+                custIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
+
+            }
+            catch (Exception exc) { }
+
+            var billingAddress = new Address()
+            {
+                address1 = form["address1"],
+                address2 = form["address2"],
+                address3 = form["address3"],
+                postalCode = form["postcode"],
+                city = form["city"],
+                state = "",
+                countryCode = Enum.Parse(typeof(CountryCode), form["countryCode"]).ToString()
+            };
+
+            var deliveryAddress = new DeliveryAddress()
+            {
+                firstName = form["delivery-firstName"],
+                lastName = form["delivery-lastName"],
+                address1 = form["delivery-address1"],
+                address2 = form["delivery-address2"],
+                address3 = form["delivery-address3"],
+                postalCode = form["delivery-postcode"],
+                city = form["delivery-city"],
+                state = "",
+                countryCode = Enum.Parse(typeof(CountryCode), form["delivery-countryCode"]).ToString()
+            };
+
+            var request = new OrderRequest()
+            {
+                token = form["token"],
+                name = form["name"],
+                shopperEmailAddress = form["shopper-email"],
+                orderDescription = form["description"],
+                amount = (int)(Convert.ToDecimal(form["amount"]) * 100),
+                currencyCode = Enum.Parse(typeof(CurrencyCode), form["currency"]).ToString(),
+                billingAddress = billingAddress,
+                deliveryAddress = deliveryAddress,
+                customerIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]),
+                customerOrderCode = "A123",
+                successUrl = form["success-url"],
+                failureUrl = form["failure-url"],
+                pendingUrl = form["pending-url"],
+                cancelUrl = form["cancel-url"]
             };
 
             try
@@ -97,6 +210,11 @@ namespace Worldpay.Sdk.Examples
 
         private void HandleSuccessResponse(OrderResponse response)
         {
+            if (response.paymentStatus == OrderStatus.PRE_AUTHORIZED && response.paymentResponse.type == OrderType.APM.ToString())
+            {
+                HandleAPMResponse(response);
+                return;
+            }
             if (response.paymentStatus == OrderStatus.PRE_AUTHORIZED && response.is3DSOrder)
             {
                 Handle3DSResponse(response);
@@ -107,6 +225,22 @@ namespace Worldpay.Sdk.Examples
             ResponseToken.Text = response.token;
             ResponsePaymentStatus.Text = response.paymentStatus.ToString();
             ResponseJson.Text = JsonUtils.SerializeObject(response);
+        }
+
+        private void HandleAPMResponse(OrderResponse response)
+        {
+            Session["orderCode"] = response.orderCode;
+            Response.Clear();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<html>");
+            sb.Append("<body>");
+            sb.AppendFormat("<script>\n" + "window.location.replace(\" {0} \");" + "</script>", response.redirectURL);
+            sb.Append("</body>");
+            sb.Append("</html>");
+
+            Response.Write(sb.ToString());
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
 
         private void Handle3DSResponse(OrderResponse response)
@@ -120,7 +254,6 @@ namespace Worldpay.Sdk.Examples
             sb.AppendFormat("<form name='submitForm' action='{0}' method='post'>", response.redirectURL);
             sb.AppendFormat("<input type='hidden' name='PaReq' value='{0}'>", response.oneTime3DsToken);
             sb.AppendFormat("<input type='hidden' name='TermUrl' id='termUrl' value='{0}'>", response.redirectURL);
-            sb.AppendFormat("<input type='hidden' name='TermUrl' id='termUrl' value='{0}'>", "");
             sb.Append("<script>\n" +
                       "  document.getElementById('termUrl').value =\n" +
                       "  window.location.href.replace('CreateOrder', 'AuthorizeOrder');" +
