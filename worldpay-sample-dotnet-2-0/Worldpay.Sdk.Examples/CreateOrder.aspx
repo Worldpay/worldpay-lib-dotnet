@@ -15,7 +15,6 @@
                 <label>Order Type</label>
                 <select id="orderType" name="orderType">
                     <option value="ECOM" selected="selected">ECOM</option>
-                    <option value="RECURRING">RECURRING</option>
                     <option value="MOTO">MOTO</option>
                     <option value="APM">APM</option>
                 </select>
@@ -111,6 +110,21 @@
                 <input type="text" id="currency" name="currency" value="GBP" />
             </div>
 
+            <div class="form-row">
+                <label>Settlement Currency</label>
+                 <select id="settlement-currency" name="settlement-currency">
+                    <option value="" selected></option>
+                    <option value="USD">USD</option>
+                    <option value="GBP">GBP</option>
+                    <option value="EUR">EUR</option>
+                    <option value="CAD">CAD</option>
+                    <option value="NOK">NOK</option>
+                    <option value="SEK">SEK</option>
+                    <option value="SGD">SGD</option>
+                    <option value="HKD">HKD</option>
+                    <option value="DKK">DKK</option>
+                </select>
+            </div>
 
             <div class="form-row reusable-token-row">
                 <label>Reusable Token</label>

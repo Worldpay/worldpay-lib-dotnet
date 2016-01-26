@@ -16,6 +16,8 @@ DotNet Library for Worldpay REST API (.NET 3.5+, .NET 2.0)
 Initialize the REST client with the default URL and the specified service key and then use the required service:
 ```c#
 
+WorldpayRestClient restClient = new WorldpayRestClient("https://api.worldpay.com/v1", "YOUR_SERVICE_KEY");
+
 var orderRequest = new OrderRequest()
 {
     amount = 1999,
@@ -43,11 +45,6 @@ try {
     Console.WriteLine("Error description: " + e.apiError.description);
     Console.WriteLine("Error message: " + e.apiError.message);
 }
-```
-
-Alternatively, the client can also be initialized with the REST service URL as well as the service key e.g.
-```c#
-WorldpayRestClient restClient = new WorldpayRestClient("https://api.worldpay.com/v1", "YOUR_SERVICE_KEY");
 ```
 
 worldpay-sample-dotnet-3-5 & 2-0

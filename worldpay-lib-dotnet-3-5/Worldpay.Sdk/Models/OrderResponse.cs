@@ -45,5 +45,8 @@ namespace Worldpay.Sdk.Models
         [DataMember]
         public DeliveryAddress deliveryAddress { get; set; }
 
+        [DataMember]
+        public string statementNarrative { get; set; }
+
     }
 }

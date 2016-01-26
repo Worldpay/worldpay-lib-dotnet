@@ -12,7 +12,7 @@
             formData += '&serviceKey=' + obj.service_key;
             formData += '&clientKey=' + obj.client_key;
             $.ajax({
-                url: '/ConfigurationService.asmx/Test',
+                url: '<%Response.Write(Request.Url.Scheme + "://" + Request.Url.Authority + Request.ApplicationPath.TrimEnd('/') + "/ConfigurationService.asmx/Test");%>',
                 type: 'POST',
                 dataType: 'text',
                 data: formData,
@@ -88,12 +88,12 @@
 </div>
 <ul id="top-nav">
     <li><a href="CreateOrder.aspx">Create Order</a></li>
+    <li><a href="RecurringPayment.aspx">Create Order (CardOnFile)</a></li>
     <li><a href="CaptureAuthorizedOrder.aspx">Capture Authorised Order</a></li>
     <li><a href="CancelAuthorizedOrder.aspx">Cancel Authorised Order</a></li>
     <li><a href="RefundOrder.aspx">Refund</a></li>
-    <br />
     <li><a href="PartiallyRefundOrder.aspx">Partial Refund</a></li>
+    <br />
     <li><a href="StoredCard.aspx">Stored Cards</a></li>
     <li><a href="GetOrder.aspx">Get Order</a></li>
-    <li><a href="RecurringPayment.aspx">Recurring Payment</a></li>
 </ul>

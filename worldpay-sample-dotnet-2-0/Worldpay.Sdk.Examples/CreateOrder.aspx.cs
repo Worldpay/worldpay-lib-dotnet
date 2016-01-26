@@ -42,7 +42,7 @@ namespace Worldpay.Sdk.Examples
         private void createOrder()
         {
             var form = HttpContext.Current.Request.Form;
-            var client = new WorldpayRestClient((string)Session["service_key"]);
+            var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
             var orderType = (OrderType)Enum.Parse(typeof(OrderType), form["orderType"]);
 
             var cardRequest = new CardRequest();
@@ -52,14 +52,28 @@ namespace Worldpay.Sdk.Examples
             cardRequest.expiryMonth = Convert.ToInt32(form["exp-month"]);
             cardRequest.expiryYear = Convert.ToInt32(form["exp-year"]);
             cardRequest.type = form["cardType"];
-
+            int? _amount = null;
+            var _currencyCode = "";
             Dictionary<string, string> custIdentifiers = new Dictionary<string, string>();
+
             try
             {
                 custIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
 
             }
             catch (Exception exc) { }
+
+            try
+            {
+                _amount = (int)(Convert.ToDecimal(form["amount"]) * 100);
+            }
+            catch (Exception excAmount) { }
+            
+            try
+            {
+                _currencyCode = Enum.Parse(typeof(CurrencyCode), form["currency"]).ToString();
+            }
+            catch (Exception excCurrency) { }
 
             var billingAddress = new Address()
             {
@@ -103,10 +117,11 @@ namespace Worldpay.Sdk.Examples
             {
                 token = form["token"],
                 orderDescription = form["description"],
-                amount = (int)(Convert.ToDecimal(form["amount"]) * 100),
-                currencyCode = Enum.Parse(typeof(CurrencyCode), form["currency"]).ToString(),
+                amount = _amount,
+                currencyCode = _currencyCode,
                 name =  is3DS ? "3D" : form["name"],
                 shopperEmailAddress = form["shopper-email"],
+                statementNarrative = form["statement-narrative"],
                 billingAddress = billingAddress,
                 deliveryAddress = deliveryAddress,
                 threeDSecureInfo = is3DS ? threeDSInfo : new ThreeDSecureInfo(),
@@ -116,6 +131,11 @@ namespace Worldpay.Sdk.Examples
                 customerIdentifiers = custIdentifiers,
                 customerOrderCode = "A123"
             };
+
+            if (!string.IsNullOrEmpty(form["settlement-currency"]))
+            {
+                request.settlementCurrency = form["settlement-currency"];
+            }
 
             try
             {
@@ -138,7 +158,9 @@ namespace Worldpay.Sdk.Examples
         private void createAPMOrder()
         {
             var form = HttpContext.Current.Request.Form;
-            var client = new WorldpayRestClient((string)Session["service_key"]);
+            var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
+            int? _amount = null;
+            var _currencyCode = "";
             Dictionary<string, string> custIdentifiers = new Dictionary<string, string>();
 
             try
@@ -147,6 +169,18 @@ namespace Worldpay.Sdk.Examples
 
             }
             catch (Exception exc) { }
+
+            try
+            {
+                _amount = (int)(Convert.ToDecimal(form["amount"]) * 100);
+            }
+            catch (Exception excAmount) { }
+
+            try
+            {
+                _currencyCode = Enum.Parse(typeof(CurrencyCode), form["currency"]).ToString();
+            }
+            catch (Exception excCurrency) { }
 
             var billingAddress = new Address()
             {
@@ -177,18 +211,24 @@ namespace Worldpay.Sdk.Examples
                 token = form["token"],
                 name = form["name"],
                 shopperEmailAddress = form["shopper-email"],
+                statementNarrative = form["statement-narrative"],
                 orderDescription = form["description"],
-                amount = (int)(Convert.ToDecimal(form["amount"]) * 100),
-                currencyCode = Enum.Parse(typeof(CurrencyCode), form["currency"]).ToString(),
+                amount = _amount,
+                currencyCode = _currencyCode,
                 billingAddress = billingAddress,
                 deliveryAddress = deliveryAddress,
-                customerIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]),
+                customerIdentifiers = custIdentifiers,
                 customerOrderCode = "A123",
                 successUrl = form["success-url"],
                 failureUrl = form["failure-url"],
                 pendingUrl = form["pending-url"],
                 cancelUrl = form["cancel-url"]
             };
+
+            if (!string.IsNullOrEmpty(form["settlement-currency"]))
+            {
+                request.settlementCurrency = form["settlement-currency"];
+            }
 
             try
             {

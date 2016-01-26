@@ -62,7 +62,7 @@ namespace Worldpay.Sdk
         {
             if (amount == 0)
             {
-                return Http.Post<CaptureRequest, OrderResponse>(String.Format("{0}/orders/{1}/capture", _baseUrl, orderCode), null);
+                return CaptureAuthorizedOrder(orderCode);
             }
             else
             {
@@ -111,8 +111,15 @@ namespace Worldpay.Sdk
         /// <param name="amount">The amount of the order to be partially refunded</param>
         public void Refund(String orderCode, int amount)
         {
-            PartialRefundRequest partialRefundRequest = new PartialRefundRequest { refundAmount = amount };
-            Http.Post(String.Format("{0}/orders/{1}/refund", _baseUrl, orderCode), partialRefundRequest);
+            if (amount == 0)
+            {
+                Refund(orderCode);
+            }
+            else
+            {
+                PartialRefundRequest partialRefundRequest = new PartialRefundRequest { refundAmount = amount };
+                Http.Post(String.Format("{0}/orders/{1}/refund", _baseUrl, orderCode), partialRefundRequest);
+            }
         }
     }
 }

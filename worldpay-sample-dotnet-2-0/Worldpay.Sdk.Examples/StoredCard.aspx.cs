@@ -16,7 +16,7 @@ namespace Worldpay.Sdk.Examples
         protected void OnShowCardDetails(object sender, CommandEventArgs e)
         {
             var token = Request["token"];
-            var client = new WorldpayRestClient(Configuration.ServiceKey);
+            var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
 
             try
             {

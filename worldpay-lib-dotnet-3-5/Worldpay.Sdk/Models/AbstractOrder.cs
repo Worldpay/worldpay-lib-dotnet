@@ -15,10 +15,13 @@ namespace Worldpay.Sdk.Models
         public string orderDescription { get; set; }
 
         [DataMember]
-        public int amount { get; set; }
+        public int? amount { get; set; }
 
-        [DataMember, JsonConverter(typeof(StringEnumConverter))]
-        public CurrencyCode currencyCode { get; set; }
+        [DataMember]
+        public string currencyCode { get; set; }
+
+        [DataMember]
+        public string settlementCurrency { get; set; }
 
         [DataMember]
         public bool authorizeOnly { get; set; }

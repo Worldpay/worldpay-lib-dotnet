@@ -271,7 +271,7 @@ namespace Worldpay.Sdk.Test
         {
             var orderRequest = new OrderRequest();
             orderRequest.amount = 1999;
-            orderRequest.currencyCode = CurrencyCode.GBP;
+            orderRequest.currencyCode = "GBP";
             orderRequest.name = "test name";
             orderRequest.orderDescription = "test description";
 
@@ -297,7 +297,7 @@ namespace Worldpay.Sdk.Test
         {
             var orderRequest = new OrderRequest();
             orderRequest.amount = 1999;
-            orderRequest.currencyCode = CurrencyCode.GBP;
+            orderRequest.currencyCode = "GBP";
             orderRequest.name = "3D";
             orderRequest.orderDescription = "test description";
 
@@ -336,7 +336,7 @@ namespace Worldpay.Sdk.Test
             orderRequest.failureUrl = "http://www.testurl.com/failure";
             orderRequest.pendingUrl = "http://www.testurl.com/pending";
 
-            orderRequest.currencyCode = CurrencyCode.GBP;
+            orderRequest.currencyCode = "GBP";
             orderRequest.name = "Test";
             orderRequest.orderDescription = "test description";
             orderRequest.is3DSOrder = false;

@@ -6,9 +6,11 @@
 
         public string orderDescription { get; set; }
 
-        public int amount { get; set; }
+        public int? amount { get; set; }
 
         public string currencyCode { get; set; }
+
+        public string settlementCurrency { get; set; }
 
         public bool authorizeOnly { get; set; }
 

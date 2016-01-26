@@ -23,7 +23,7 @@ namespace Worldpay.Sdk.Examples
                 throw new WorldpayException("Order code must be specified");
             }
 
-            var client = new WorldpayRestClient(Configuration.ServiceKey);
+            var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
 
             try
             {

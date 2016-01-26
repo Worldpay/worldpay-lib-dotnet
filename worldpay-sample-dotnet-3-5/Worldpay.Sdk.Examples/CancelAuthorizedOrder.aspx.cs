@@ -15,7 +15,7 @@ namespace Worldpay.Sdk.Examples
         protected void OnCancelOrder(object sender, CommandEventArgs e)
         {
             var form = HttpContext.Current.Request.Form;
-            var client = new WorldpayRestClient(Configuration.ServiceKey);
+            var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
 
             var orderCode = form["orderCode"];
 

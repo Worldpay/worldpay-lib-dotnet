@@ -62,5 +62,7 @@ namespace Worldpay.Sdk.Models
 
         public string shopperEmailAddress { get; set; }
 
+        public string statementNarrative { get; set; }
+
     }
 }

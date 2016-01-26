@@ -19,7 +19,7 @@ namespace Worldpay.Sdk.Examples
 
         protected void onAuthorizeOrder(object sender, CommandEventArgs e)
         {
-            var client = new WorldpayRestClient(Configuration.ServiceKey);
+            var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
 
             string orderCode = (string)Session["orderCode"];
             var responseCode = HttpContext.Current.Request.Form["PaRes"];
