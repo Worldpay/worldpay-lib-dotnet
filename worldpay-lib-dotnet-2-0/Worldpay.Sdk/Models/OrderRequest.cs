@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using Worldpay.Sdk.Enums;
 
@@ -21,6 +22,16 @@ namespace Worldpay.Sdk.Models
         public Dictionary<string, string> customerIdentifiers { get; set; }
 
         public string customerOrderCode { get; set; }
+
+        public string orderCodeSuffix { get; set; }
+
+        public string orderCodePrefix { get; set; }
+
+        public string shopperLanguageCode { get; set; }
+
+        public bool reusable { get; set; }
+
+        public AbstractPaymentMethod paymentMethod { get; set; }
 
         public string orderType { get; set; }
 
@@ -50,6 +61,11 @@ namespace Worldpay.Sdk.Models
             set { threeDSecureInfo.shopperAcceptHeader = value; }
         }
 
+        [JsonIgnore]
+        public bool authoriseOnly {
+            get { return this.authorizeOnly; }
+            set { this.authorizeOnly = value; }
+        }
         public bool is3DSOrder { get; set; }
 
         public string successUrl { get; set; }

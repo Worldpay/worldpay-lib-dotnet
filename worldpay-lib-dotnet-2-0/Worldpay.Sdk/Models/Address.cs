@@ -19,5 +19,7 @@ namespace Worldpay.Sdk.Models
         public string state { get; set; }
 
         public string countryCode { get; set; }
+
+        public string telephoneNumber { get; set; }
     }
 }

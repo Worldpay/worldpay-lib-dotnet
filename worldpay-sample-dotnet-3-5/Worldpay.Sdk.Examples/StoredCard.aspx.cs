@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Web.UI.WebControls;
-using Newtonsoft.Json;
+using Worldpay.Sdk.Examples;
 using Worldpay.Sdk.Models;
+using Newtonsoft.Json;
 
 namespace Worldpay.Sdk.Examples
 {
@@ -36,7 +37,7 @@ namespace Worldpay.Sdk.Examples
             ResultYear.Text = details.paymentMethod.expiryYear.ToString();
             ResultType.Text = details.paymentMethod.cardType;
             ResultCardNumber.Text = details.paymentMethod.maskedCardNumber;
-            ResponseJson.Text = JsonConvert.SerializeObject(details, Formatting.Indented);
+            ResponseJson.Text = JavaScriptConvert.SerializeObject(details);
             SuccessPanel.Visible = true;
         }
     }

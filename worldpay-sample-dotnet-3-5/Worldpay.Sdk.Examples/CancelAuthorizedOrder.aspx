@@ -2,16 +2,16 @@
 <%@ Register TagPrefix="uc" TagName="ErrorControl" Src="ErrorControl.ascx" %>
 
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <h1>.NET 3.5 Library Cancel Authorised Order Example</h1>
+    <h1>.NET Library Cancel Authorized Order Example</h1>
 
     <asp:Panel runat="server" ID="RequestPanel" Visible="<%# !IsPostBack %>">
-        <form method="post" id="CancelAuthorisedOrderForm" runat="server">
+        <form method="post" id="CancelAuthorizedOrderForm" runat="server">
             <div class="payment-errors"></div>
             <div class="form-row">
                 <label>Worldpay Order Code</label>
                 <input type="text" id="order-code" name="orderCode" value="" />
             </div>
-            <asp:Button ID="CancelOrder" runat="server" OnCommand="OnCancelOrder" Text="Cancel Authorised Order" />
+            <asp:Button ID="CancelOrder" runat="server" OnCommand="OnCancelOrder" Text="Cancel Authorized Order" />
         </form>
     </asp:Panel>
 

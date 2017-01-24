@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Newtonsoft.Json;
 using Worldpay.Sdk;
 using Worldpay.Sdk.Enums;
 using Worldpay.Sdk.Models;
-using System.Text;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Worldpay.Sdk.Examples
 {
@@ -16,6 +17,7 @@ namespace Worldpay.Sdk.Examples
         {
             base.OnLoad(e);
             DataBind();
+
             if (IsPostBack)
             {
                 RequestPanel.Visible = false;
@@ -28,12 +30,18 @@ namespace Worldpay.Sdk.Examples
             var form = HttpContext.Current.Request.Form;
             var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
             var orderType = (OrderType)Enum.Parse(typeof(OrderType), form["orderType"]);
-            int? _amount = null;
+            int? _amount = 0;
             var _currencyCode = "";
+            Dictionary<string, string> custIdentifiers = new Dictionary<string, string>();
 
             try
             {
-                _amount = (int)(Convert.ToDecimal(form["amount"]) * 100);
+                if (!string.IsNullOrEmpty(form["amount"]))
+                {
+                    double n;
+                    bool isNumeric = double.TryParse(form["amount"], out n);
+                    _amount = isNumeric ? (int)(Convert.ToDecimal(form["amount"]) * 100) : -1;
+                }
             }
             catch (Exception excAmount) { }
 
@@ -43,6 +51,13 @@ namespace Worldpay.Sdk.Examples
             }
             catch (Exception excCurrency) { }
 
+            try
+            {
+                custIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
+
+            }
+            catch (Exception exc) { }
+
             var billingAddress = new Address()
             {
                 address1 = form["address1"],
@@ -51,7 +66,7 @@ namespace Worldpay.Sdk.Examples
                 postalCode = form["postcode"],
                 city = form["city"],
                 state = "",
-                countryCode = (CountryCode)Enum.Parse(typeof(CountryCode), form["countryCode"])
+                countryCode = Enum.Parse(typeof(CountryCode), form["countryCode"]).ToString()
             };
 
             var deliveryAddress = new DeliveryAddress()
@@ -64,7 +79,7 @@ namespace Worldpay.Sdk.Examples
                 postalCode = form["delivery-postcode"],
                 city = form["delivery-city"],
                 state = "",
-                countryCode = (CountryCode)Enum.Parse(typeof(CountryCode), form["delivery-countryCode"])
+                countryCode = Enum.Parse(typeof(CountryCode), form["delivery-countryCode"]).ToString()
             };
 
             var is3DS = form["3ds"] == "on" ? true : false;
@@ -89,17 +104,26 @@ namespace Worldpay.Sdk.Examples
                     billingAddress = billingAddress,
                     deliveryAddress = deliveryAddress,
                     amount = _amount,
-                    currencyCode = _currencyCode,                                   
-                    name = is3DS ? "3D" : form["name"],
+                    currencyCode = _currencyCode,
+                    name = is3DS && Session["mode"].Equals("test") ? "3D" : form["name"],
                     threeDSecureInfo = is3DS ? threeDSInfo : new ThreeDSecureInfo(),
                     is3DSOrder = is3DS,
-                    authorizeOnly = form["authoriseOnly"] == "on",
-                    orderType = orderType             
+                    customerOrderCode = form["customer-order-code"],
+                    orderCodePrefix = form["order-code-prefix"],
+                    orderCodeSuffix = form["order-code-suffix"],
+                    shopperEmailAddress = form["shopper-email"],
+                    customerIdentifiers = custIdentifiers,                
+                    authorizeOnly = form["authorizeOnly"] == "on",
+                    orderType = orderType.ToString()
             };
 
             if (!string.IsNullOrEmpty(form["settlement-currency"]))
             {
                 request.settlementCurrency = form["settlement-currency"];
+            }
+            if (!string.IsNullOrEmpty(form["site-code"]))
+            {
+                request.siteCode = form["site-code"];
             }
 
             try
@@ -128,7 +152,7 @@ namespace Worldpay.Sdk.Examples
             ResponseOrderCode.Text = response.orderCode;
             ResponseToken.Text = response.token;
             ResponsePaymentStatus.Text = response.paymentStatus.ToString();
-            ResponseJson.Text = JsonConvert.SerializeObject(response, Formatting.Indented);
+            ResponseJson.Text = JavaScriptConvert.SerializeObject(response);
             SuccessPanel.Visible = true;
         }
 

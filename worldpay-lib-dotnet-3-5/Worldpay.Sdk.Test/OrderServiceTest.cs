@@ -1,7 +1,5 @@
-﻿using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using WorldPay.Sdk;
 using Worldpay.Sdk.Enums;
 using Worldpay.Sdk.Models;
 
@@ -52,7 +50,7 @@ namespace Worldpay.Sdk.Test
         {
             OrderRequest orderRequest = createOrderRequest();
             orderRequest.token = CreateToken();
-            orderRequest.orderType = OrderType.MOTO;
+            orderRequest.orderType = OrderType.MOTO.ToString();
 
             OrderResponse response = _orderService.Create(orderRequest);
 
@@ -62,7 +60,7 @@ namespace Worldpay.Sdk.Test
         }
 
         [TestMethod]
-        public void ShouldCreateAuthorisationRequest()
+        public void ShouldCreateAuthorizationRequest()
         {
             OrderRequest orderRequest = createOrderRequest();
             orderRequest.token = CreateToken();
@@ -160,17 +158,17 @@ namespace Worldpay.Sdk.Test
         }
 
         /// <summary>
-        /// Vefiy that authorise 3DS Order works
+        /// Vefiy that authorize 3DS Order works
         /// </summary>
         [TestMethod]
-        public void ShouldAuthorise3DSOrder()
+        public void ShouldAuthorize3DSOrder()
         {
             OrderRequest orderRequest = create3DSOrderRequest();
             orderRequest.token = CreateToken();
 
             OrderResponse response = _orderService.Create(orderRequest);
 
-            var threeDSInfo= new ThreeDSecureInfo()
+            var threeDSInfo = new ThreeDSecureInfo()
             {
                 shopperIpAddress = "127.0.0.1",
                 shopperSessionId = "sessionId",
@@ -180,20 +178,20 @@ namespace Worldpay.Sdk.Test
 
             var authorizationResponse = _orderService.Authorize(response.orderCode, "IDENTIFIED", threeDSInfo);
 
-           Assert.AreEqual(response.orderCode, authorizationResponse.orderCode);
-           Assert.AreEqual(1999, authorizationResponse.amount);
-           Assert.IsTrue(response.is3DSOrder);
-           Assert.AreEqual(OrderStatus.SUCCESS, authorizationResponse.paymentStatus);
+            Assert.AreEqual(response.orderCode, authorizationResponse.orderCode);
+            Assert.AreEqual(1999, authorizationResponse.amount);
+            Assert.IsTrue(response.is3DSOrder);
+            Assert.AreEqual(OrderStatus.SUCCESS, authorizationResponse.paymentStatus);
         }
 
         /// <summary>
-        /// Vefiy that authorise APM Order works
+        /// Vefiy that authorize APM Order works
         /// </summary>
         [Ignore]
         [TestMethod]
-        public void ShouldAuthoriseAPMOrder()
+        public void ShouldAuthorizeAPMOrder()
         {
-           //We need to amend the simulator to auto submit the form and send notifications automatically in order to unit test this
+            //We need to amend the simulator to auto submit the form and send notifications automatically in order to unit test this
         }
 
         /// <summary>
@@ -271,7 +269,7 @@ namespace Worldpay.Sdk.Test
         {
             var orderRequest = new OrderRequest();
             orderRequest.amount = 1999;
-            orderRequest.currencyCode = "GBP";
+            orderRequest.currencyCode = CurrencyCode.GBP.ToString();
             orderRequest.name = "test name";
             orderRequest.orderDescription = "test description";
 
@@ -279,12 +277,12 @@ namespace Worldpay.Sdk.Test
             address.address1 = "line 1";
             address.address2 = "line 2";
             address.city = "city";
-            address.countryCode = CountryCode.GB;
+            address.countryCode = CountryCode.GB.ToString();
             address.postalCode = "AB1 2CD";
             orderRequest.billingAddress = address;
 
             var customerIdentifiers = new Dictionary<string, string>();
-            customerIdentifiers.Add("test key 1", "test value 1");
+            customerIdentifiers["test key 1"] = "test value 1";
 
             orderRequest.customerIdentifiers = customerIdentifiers;
             return orderRequest;
@@ -297,7 +295,7 @@ namespace Worldpay.Sdk.Test
         {
             var orderRequest = new OrderRequest();
             orderRequest.amount = 1999;
-            orderRequest.currencyCode = "GBP";
+            orderRequest.currencyCode = CurrencyCode.GBP.ToString();
             orderRequest.name = "3D";
             orderRequest.orderDescription = "test description";
 
@@ -313,12 +311,12 @@ namespace Worldpay.Sdk.Test
             address.address1 = "line 1";
             address.address2 = "line 2";
             address.city = "city";
-            address.countryCode = CountryCode.GB;
+            address.countryCode = CountryCode.GB.ToString();
             address.postalCode = "AB1 2CD";
             orderRequest.billingAddress = address;
 
             var customerIdentifiers = new Dictionary<string, string>();
-            customerIdentifiers.Add("test key 1", "test value 1");
+            customerIdentifiers["test key 1"] = "test value 1";
 
             orderRequest.customerIdentifiers = customerIdentifiers;
             return orderRequest;
@@ -336,7 +334,7 @@ namespace Worldpay.Sdk.Test
             orderRequest.failureUrl = "http://www.testurl.com/failure";
             orderRequest.pendingUrl = "http://www.testurl.com/pending";
 
-            orderRequest.currencyCode = "GBP";
+            orderRequest.currencyCode = CurrencyCode.GBP.ToString();
             orderRequest.name = "Test";
             orderRequest.orderDescription = "test description";
             orderRequest.is3DSOrder = false;
@@ -345,12 +343,12 @@ namespace Worldpay.Sdk.Test
             address.address1 = "line 1";
             address.address2 = "line 2";
             address.city = "city";
-            address.countryCode = CountryCode.GB;
+            address.countryCode = CountryCode.GB.ToString();
             address.postalCode = "AB1 2CD";
             orderRequest.billingAddress = address;
 
             var customerIdentifiers = new Dictionary<string, string>();
-            customerIdentifiers.Add("test key 1", "test value 1");
+            customerIdentifiers["test key 1"] = "test value 1";
 
             orderRequest.customerIdentifiers = customerIdentifiers;
             return orderRequest;

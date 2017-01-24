@@ -25,7 +25,8 @@ namespace Worldpay.Sdk.Examples
             try
             {
                 refundAmount = Int32.Parse(Request["amount"]);
-            } catch (Exception exc) { }
+            }
+            catch (Exception exc) { }
 
             try
             {

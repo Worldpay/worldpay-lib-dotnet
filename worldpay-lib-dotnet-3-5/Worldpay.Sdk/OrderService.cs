@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
-using System.Web;
 using WorldPay.Sdk.Models;
 using Worldpay.Sdk.Models;
 
@@ -9,7 +7,7 @@ namespace Worldpay.Sdk
     /// <summary>
     /// Service for interacting with the Worldpay Order API
     /// </summary>
-    [Serializable, DataContract]
+    [Serializable]
     public class OrderService : AbstractService
     {
         private readonly string _baseUrl;
@@ -17,7 +15,8 @@ namespace Worldpay.Sdk
         /// <summary>
         /// Constructor
         /// </summary>
-        public OrderService(string baseUrl, Http http) : base(http)
+        public OrderService(string baseUrl, Http http)
+            : base(http)
         {
             _baseUrl = baseUrl;
         }
@@ -86,7 +85,8 @@ namespace Worldpay.Sdk
         /// <param name="responseCode">Authorization Response code from Issuer</param>
         /// <param name="threeDSInfo">3D Secure Information</param>
         /// <returns>Confirmation of the new order</returns>
-        public OrderResponse Authorize(string orderCode, string responseCode, ThreeDSecureInfo threeDSInfo) {
+        public OrderResponse Authorize(string orderCode, string responseCode, ThreeDSecureInfo threeDSInfo)
+        {
             return Http.Put<OrderAuthorizationRequest, OrderResponse>(String.Format("{0}/orders/{1}", _baseUrl, orderCode),
                                                                         new OrderAuthorizationRequest()
                                                                         {

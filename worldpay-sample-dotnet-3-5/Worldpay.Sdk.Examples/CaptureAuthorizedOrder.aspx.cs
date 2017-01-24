@@ -18,16 +18,15 @@ namespace Worldpay.Sdk.Examples
             var client = new WorldpayRestClient((string)Session["apiEndpoint"], (string)Session["service_key"]);
 
             var orderCode = form["orderCode"];
-            var amount = 0;
-
+            int amount = 0;
             try
             {
-                amount = Int32.Parse(form["amount"]);
+                amount = (int)(Convert.ToDecimal(form["amount"]) * 100);
             }
-            catch (Exception exc) {}
+            catch (Exception excAmount) { }
 
             try
-            {
+            {              
                 var response = client.GetOrderService().CaptureAuthorizedOrder(orderCode, amount);
 
                 ServerResponse.Text = "Order code:" + response.orderCode +

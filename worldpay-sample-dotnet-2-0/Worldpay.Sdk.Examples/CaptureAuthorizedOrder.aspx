@@ -2,10 +2,10 @@
 <%@ Register TagPrefix="uc" TagName="ErrorControl" Src="ErrorControl.ascx" %>
 
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <h1>.NET 2.0 Library Capture Authorised Order Example</h1>
+    <h1>.NET Library Capture Authorized Order Example</h1>
 
     <asp:Panel runat="server" ID="RequestPanel" Visible="<%# !IsPostBack %>">
-        <form method="post" id="CaptureAuthorisedOrderForm" runat="server">
+        <form method="post" id="CaptureAuthorizedOrderForm" runat="server">
             <div class="payment-errors"></div>
             <div class="form-row">
                 <label>Worldpay Order Code</label>
@@ -15,7 +15,7 @@
                 <label>Amount</label>
                 <input type="text" id="amount" name="amount" value="" />
             </div>
-            <asp:Button ID="CaptureOrder" runat="server" OnCommand="OnCaptureOrder" Text="Capture Authorised Order" />
+            <asp:Button ID="CaptureOrder" runat="server" OnCommand="OnCaptureOrder" Text="Capture Authorized Order" />
         </form>
     </asp:Panel>
 

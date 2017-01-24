@@ -20,7 +20,7 @@ namespace Worldpay.Sdk.Examples
         protected void onAuthorizeOrder(object sender, CommandEventArgs e)
         {
             string orderCode = (string)Session["orderCode"];
-            OrderResponse.Text = "APM Order <span id='order-code'>" + orderCode + "</span> has been authorised<br />";
+            OrderResponse.Text = "APM Order <span id='order-code'>" + orderCode + "</span> has been authorized<br />";
         }
     }
 }

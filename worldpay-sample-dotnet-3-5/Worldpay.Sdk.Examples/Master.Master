@@ -1,10 +1,10 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="Worldpay.Sdk.Examples.Master" ClientIDMode="Static" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="Worldpay.Sdk.Examples.Master" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>.NET 3.5 Library</title>
+        <title>.NET Library</title>
         <script src="https://code.jquery.com/jquery-1.11.0.min.js"> </script>   
         <style type="text/css">
             body {
@@ -91,6 +91,11 @@
 
             #top-nav li+li:before {
                  content: "|";
+            }
+
+            pre {
+                word-wrap: break-word;
+                white-space: inherit;
             }
 
 

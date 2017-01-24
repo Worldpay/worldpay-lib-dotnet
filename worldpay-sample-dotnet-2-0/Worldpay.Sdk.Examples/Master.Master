@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>.NET 2.0 Library</title>
+        <title>.NET Library</title>
         <script src="https://code.jquery.com/jquery-1.11.0.min.js"> </script>   
         <style type="text/css">
             body {
@@ -91,6 +91,11 @@
 
             #top-nav li+li:before {
                  content: "|";
+            }
+
+            pre {
+                word-wrap: break-word;
+                white-space: inherit;
             }
 
 

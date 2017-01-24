@@ -3,7 +3,7 @@
 <%@ Register TagPrefix="uc" TagName="ErrorControl" Src="ErrorControl.ascx" %>
 
 <asp:Content ID="ResponsePanel" ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <h1>.NET 2.0 Library Create Order Example</h1>
+    <h1>.NET Library Create Order Example</h1>
 
     <h2>Payment Response</h2>
     <p>

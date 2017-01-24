@@ -14,7 +14,7 @@ namespace Worldpay.Sdk
         private readonly string _baseUrl;
 
         /// <summary>
-        /// The service key for authorising access
+        /// The service key for authorizing access
         /// </summary>
         private readonly string _serviceKey;
 

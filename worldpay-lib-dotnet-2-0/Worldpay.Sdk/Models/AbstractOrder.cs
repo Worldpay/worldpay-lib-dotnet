@@ -12,7 +12,11 @@
 
         public string settlementCurrency { get; set; }
 
+        public string siteCode { get; set; }
+
         public bool authorizeOnly { get; set; }
+
+        public bool authoriseOnly { get; set; }
 
         public int? authorizedAmount { get; set; }
     }

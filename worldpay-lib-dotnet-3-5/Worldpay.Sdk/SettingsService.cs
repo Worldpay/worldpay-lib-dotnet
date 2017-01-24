@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using Worldpay.Sdk.Models;
 
 namespace Worldpay.Sdk
@@ -7,7 +6,7 @@ namespace Worldpay.Sdk
     /// <summary>
     /// Service for interacting with the Worldpay Order API
     /// </summary>
-    [Serializable, DataContract]
+    [Serializable]
     public class SettingsService : AbstractService
     {
         private readonly string _baseUrl;

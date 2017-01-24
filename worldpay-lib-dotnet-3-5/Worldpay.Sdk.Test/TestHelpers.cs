@@ -49,7 +49,7 @@ namespace Worldpay.Sdk.Test
             cardRequest.type = "APM";
             cardRequest.apmName = "PAYPAL";
             cardRequest.shopperCountryCode = "GB";
-            cardRequest.apmFields = new List<Entry>();
+            cardRequest.apmFields = new Dictionary<string, string>();
 
             tokenRequest.paymentMethod = cardRequest;
 

@@ -35,7 +35,7 @@ namespace Worldpay.Sdk.Examples
             try
             {
                 var response = client.GetOrderService().Authorize(orderCode, responseCode, threeDSInfo);
-                OrderResponse.Text = "Order code: <span id='order-code'>" + response.orderCode + "</span><br />Payment Status: " +
+                OrderResponse.Text = "Order code:<span id='order-code'>" + response.orderCode + "</span><br />Payment Status: " +
                                             response.paymentStatus + "<br />Environment: " + response.environment;
             }
             catch (WorldpayException exc)

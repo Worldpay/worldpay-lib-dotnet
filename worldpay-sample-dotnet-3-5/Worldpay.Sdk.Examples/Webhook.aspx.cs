@@ -49,6 +49,10 @@ namespace Worldpay.Sdk.Examples
                         // The order's charge back has been reversed
                         Record(response.notificationEventType, response.orderCode, response.paymentStatus);
                         break;
+                    case OrderStatus.EXPIRED:
+                        // The order is expired
+                        Record(response.notificationEventType, response.orderCode, response.paymentStatus);
+                        break;
                 }
 
                 Response.StatusCode = 200;

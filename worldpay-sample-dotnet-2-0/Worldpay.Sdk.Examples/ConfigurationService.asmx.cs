@@ -14,6 +14,7 @@ namespace Worldpay.Sdk.Examples
             Session["js_endpoint"] = jsEndpoint;
             Session["service_key"] = serviceKey;
             Session["client_key"] = clientKey;
+            Session["mode"] = clientKey.StartsWith("L_C") ? "live" : "test";
             return ""; // Required to prevent a console error in FF. See https://bugzilla.mozilla.org/show_bug.cgi?id=884693
         }
     }

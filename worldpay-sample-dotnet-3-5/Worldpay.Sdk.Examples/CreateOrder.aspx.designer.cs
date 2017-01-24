@@ -13,13 +13,13 @@ namespace Worldpay.Sdk.Examples {
     public partial class CreateOrder {
         
         /// <summary>
-        /// paymentForm control.
+        /// aspnetForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm paymentForm;
+        protected global::System.Web.UI.HtmlControls.HtmlForm aspnetForm;
         
         /// <summary>
         /// RequestPanel control.

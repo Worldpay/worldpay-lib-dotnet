@@ -5,11 +5,16 @@
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <script type="text/javascript" src="<%= Session["js_endpoint"] %>"></script>
     <form id="aspnetForm" runat="server">
-        <h1>.NET 2.0 Library<br />Recurring Payment Example</h1>
+        <h1>.NET Library<br />Recurring Payment Example</h1>
 
         <asp:Panel runat="server" ID="RequestPanel" Visible="<%# !IsPostBack %>">
             <div class="payment-errors"></div>
             <div class="header">Checkout</div>
+
+            <div class="form-row no-apm">
+                <label>Site Code</label>
+                <input type="text" id="site-code" name="site-code" value="N/A" />
+            </div>
 
             <div class="form-row">
                 <label>Name</label>
@@ -66,8 +71,8 @@
             </div>
 
             <div class="form-row">
-                <label>Authorise Only</label>
-                <input type="checkbox" id="chkAuthoriseOnly" name="authoriseOnly" />
+                <label>Authorize Only</label>
+                <input type="checkbox" id="chkAuthorizeOnly" name="authorizeOnly" />
             </div>
 
             <div class="header">Billing address</div>
@@ -179,11 +184,38 @@
                 <input type="text" id="description" name="description" value="My test order" />
             </div>
 
+             <div class="form-row">
+                <label>Customer Order Code</label>
+                <input type="text" id="customer-order-code" name="customer-order-code" value="" />
+            </div>
+
+            <div class="form-row">
+                <label>Order Code Prefix</label>
+                <input type="text" id="order-code-prefix" name="order-code-prefix" value="" />
+            </div>
+
+            <div class="form-row">
+                <label>Order Code Suffix</label>
+                <input type="text" id="order-code-suffix" name="order-code-suffix" value="" />
+            </div>
+
             <div class="form-row">
                 <label>
                     Statement Narrative
                 </label>
                 <input type="text" id="statement-narrative" maxlength="24" name="statement-narrative" value="Statement Narrative" />
+            </div>
+
+            <div class="form-row">
+                <label>Shopper Email</label>
+                <input type="text" id="shopper-email" name="shopper-email" value="shopper@email.com" />
+            </div>
+           
+             <div class="form-row large">
+                <label class='left'>
+                    Customer Identifiers (json)
+                </label>
+                <textarea id="customer-identifiers" rows="6" cols="30" name="customer-identifiers"></textarea>
             </div>
 
             <div>
@@ -206,7 +238,7 @@
 
         // Set client key
         Worldpay.setClientKey('<%= Session["client_key"] %>');
-        Worldpay.api_path = '<%= Session["apiendpoint"] %>';
+        Worldpay.api_path = '<%= Session["apiendpoint"] %>/';
 
         // This is required as .NET 2.0 doesn't have ClientIDMode="static", so we can't set the form's id to anything
         // other than "aspnetForm"

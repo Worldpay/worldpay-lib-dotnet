@@ -60,7 +60,7 @@ namespace Worldpay.Sdk.Test
         }
 
         [TestMethod]
-        public void ShouldCreateAuthorisationRequest()
+        public void ShouldCreateAuthorizationRequest()
         {
             OrderRequest orderRequest = createOrderRequest();
             orderRequest.token = CreateToken();
@@ -158,10 +158,10 @@ namespace Worldpay.Sdk.Test
         }
 
         /// <summary>
-        /// Vefiy that authorise 3DS Order works
+        /// Vefiy that authorize 3DS Order works
         /// </summary>
         [TestMethod]
-        public void ShouldAuthorise3DSOrder()
+        public void ShouldAuthorize3DSOrder()
         {
             OrderRequest orderRequest = create3DSOrderRequest();
             orderRequest.token = CreateToken();
@@ -185,11 +185,11 @@ namespace Worldpay.Sdk.Test
         }
 
         /// <summary>
-        /// Vefiy that authorise APM Order works
+        /// Vefiy that authorize APM Order works
         /// </summary>
         [Ignore]
         [TestMethod]
-        public void ShouldAuthoriseAPMOrder()
+        public void ShouldAuthorizeAPMOrder()
         {
             //We need to amend the simulator to auto submit the form and send notifications automatically in order to unit test this
         }

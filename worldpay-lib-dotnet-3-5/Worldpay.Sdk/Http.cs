@@ -3,9 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
-using System.Web.Script.Serialization;
 using Newtonsoft.Json;
-using Worldpay.Sdk;
 using Worldpay.Sdk.Enums;
 using Worldpay.Sdk.Models;
 
@@ -19,7 +17,7 @@ namespace Worldpay.Sdk
         /// <summary>
         /// Connection timeout in milliseconds
         /// </summary>
-        private const int ConnectionTimeout = 10000;
+        private const int ConnectionTimeout = 61000;
 
         /// <summary>
         /// JSON header value
@@ -99,7 +97,6 @@ namespace Worldpay.Sdk
             return SendRequest<TO>(request);
         }
 
-
         /// <summary>
         /// Perform a DELETE request
         /// </summary>
@@ -161,8 +158,8 @@ namespace Worldpay.Sdk
                 if (data != null)
                 {
                     request.ContentType = ApplicationJson;
-                    string serializedData = JsonConvert.SerializeObject(data);
-                    byte[] bytes = Encoding.ASCII.GetBytes(serializedData);
+                    string serializedData = JavaScriptConvert.SerializeObject(data);
+                    byte[] bytes = Encoding.UTF8.GetBytes(serializedData);
                     request.ContentLength = bytes.Length;
 
                     using (Stream outputStream = request.GetRequestStream())
@@ -214,8 +211,9 @@ namespace Worldpay.Sdk
         {
             using (var reader = new StreamReader(responseStream))
             {
-                var responseText = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<T>(responseText);
+                var serializer = new JsonSerializer();
+                serializer.MissingMemberHandling = MissingMemberHandling.Ignore;
+                return (T)serializer.Deserialize(new JsonTextReader(reader), typeof(T));
             }
         }
 
@@ -227,7 +225,7 @@ namespace Worldpay.Sdk
                 try
                 {
                     string content = reader.ReadToEnd();
-                    error = new JavaScriptSerializer().Deserialize<ApiError>(content);
+                    error = JavaScriptConvert.DeserializeObject<ApiError>(content);
                 }
                 catch (Exception)
                 {
@@ -238,5 +236,6 @@ namespace Worldpay.Sdk
         }
 
         #endregion
+
     }
 }

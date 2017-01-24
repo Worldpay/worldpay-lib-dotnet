@@ -17,7 +17,7 @@ namespace Worldpay.Sdk
         /// <summary>
         /// Connection timeout in milliseconds
         /// </summary>
-        private const int ConnectionTimeout = 10000;
+        private const int ConnectionTimeout = 61000;
 
         /// <summary>
         /// JSON header value
@@ -159,7 +159,7 @@ namespace Worldpay.Sdk
                 {
                     request.ContentType = ApplicationJson;
                     string serializedData = JavaScriptConvert.SerializeObject(data);
-                    byte[] bytes = Encoding.ASCII.GetBytes(serializedData);
+                    byte[] bytes = Encoding.UTF8.GetBytes(serializedData);
                     request.ContentLength = bytes.Length;
 
                     using (Stream outputStream = request.GetRequestStream())

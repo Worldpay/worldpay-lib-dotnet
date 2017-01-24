@@ -8,7 +8,7 @@ namespace Worldpay.Sdk.Test
     {
         private SettingsService _settingsService;
 
-        private string MerchantId = Configuration.MerchantId; 
+        private const string MerchantId = "01346fe3-86b7-40d4-9406-a4646e9fa520";
 
         [TestInitialize]
         public void Setup()
@@ -32,12 +32,12 @@ namespace Worldpay.Sdk.Test
             _settingsService.UpdateRecurringBilling(MerchantId, true);
             
             SettingsResponse settings = _settingsService.GetSettings(MerchantId);            
-            Assert.AreEqual("True", settings.orderSetting.optInForRecurringBilling);
+            Assert.AreEqual(true, settings.orderSetting.optInForRecurringBilling);
 
-            _settingsService.UpdateRecurringBilling(MerchantId, false);
+            _settingsService.UpdateRecurringBilling(MerchantId, true);
 
             settings = _settingsService.GetSettings(MerchantId);
-            Assert.AreEqual("False", settings.orderSetting.optInForRecurringBilling);
+            Assert.AreEqual(false, settings.orderSetting.optInForRecurringBilling);
         }
 
         [TestMethod]

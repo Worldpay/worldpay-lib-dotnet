@@ -89,8 +89,8 @@
 <ul id="top-nav">
     <li><a href="CreateOrder.aspx">Create Order</a></li>
     <li><a href="RecurringPayment.aspx">Create Order (CardOnFile)</a></li>
-    <li><a href="CaptureAuthorizedOrder.aspx">Capture Authorised Order</a></li>
-    <li><a href="CancelAuthorizedOrder.aspx">Cancel Authorised Order</a></li>
+    <li><a href="CaptureAuthorizedOrder.aspx">Capture Authorized Order</a></li>
+    <li><a href="CancelAuthorizedOrder.aspx">Cancel Authorized Order</a></li>
     <li><a href="RefundOrder.aspx">Refund</a></li>
     <li><a href="PartiallyRefundOrder.aspx">Partial Refund</a></li>
     <br />

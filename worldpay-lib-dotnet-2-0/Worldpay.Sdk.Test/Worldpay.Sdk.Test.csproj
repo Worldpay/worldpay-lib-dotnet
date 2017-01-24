@@ -63,7 +63,7 @@
     <Compile Include="WebhookServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WorldPay.Sdk\Worldpay.Sdk.csproj">
+    <ProjectReference Include="..\Worldpay.Sdk\Worldpay.Sdk20.csproj">
       <Project>{d2ab0290-8b33-4467-a0df-975372b29e38}</Project>
       <Name>Worldpay.Sdk</Name>
     </ProjectReference>

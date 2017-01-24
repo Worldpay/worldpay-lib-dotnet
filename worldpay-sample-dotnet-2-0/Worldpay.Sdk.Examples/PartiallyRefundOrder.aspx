@@ -2,7 +2,7 @@
 <%@ Register TagPrefix="uc" TagName="ErrorControl" Src="ErrorControl.ascx" %>
 
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <h1>.NET 2.0 Library Partial Refund Example</h1>
+    <h1>.NET Library Partial Refund Example</h1>
 
     <asp:Panel runat="server" ID="RequestPanel" Visible="<%# !IsPostBack %>">
         <form method="post" runat="server">

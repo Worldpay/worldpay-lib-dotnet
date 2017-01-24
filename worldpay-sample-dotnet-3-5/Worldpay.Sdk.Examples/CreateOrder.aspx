@@ -4,12 +4,20 @@
 
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder" runat="server">
     <script type="text/javascript" src="<%= Session["js_endpoint"] %>"></script>
-    <form id="paymentForm" runat="server">
-        <h1>.NET 3.5 Library Create Order Example</h1>
+    <form id="aspnetForm" runat="server">
+        <h1>.NET Library Create Order Example</h1>
             
         <asp:Panel runat="server" ID="RequestPanel">
             <div class="payment-errors"></div>
             <div class="header">Checkout</div>
+
+             <div class="form-row">
+                <label>Direct Order?</label>
+                 <select id="direct-order" name="direct-order">
+                    <option value="1">Yes</option>
+                    <option value="0" selected>No</option>
+                </select>
+            </div>
 
             <div class="form-row">
                 <label>Order Type</label>
@@ -25,7 +33,21 @@
                 <select id="apm-name" data-worldpay="apm-name">
                     <option value="paypal" selected="selected">PayPal</option>
                     <option value="giropay">Giropay</option>
+                    <option value="ideal">iDEAL</option>
+                    <option value="sofort">Sofort</option>
+                    <option value="przelewy24">Przelewy24</option>
+                    <option value="alipay">Alipay</option>
+                    <option value="paysafecard">PaySafeCard</option>
+                    <option value="postepay">Postepay</option>
+                    <option value="yandex">Yandex</option>
+                    <option value="qiwi">Qiwi</option>
+                    <option value="mistercash">MisterCash</option>
                 </select>
+            </div>
+
+            <div class="form-row no-apm">
+                <label>Site Code</label>
+                <input type="text" id="site-code" name="site-code" value="N/A" />
             </div>
 
             <div class="form-row">
@@ -33,7 +55,7 @@
                 <input type="text" id="name" name="name" data-worldpay="name" value="Example Name" />
             </div>
 
-             <div class="form-row apm apm-url" style="display:none;">
+            <div class="form-row apm apm-url" style="display:none;">
                 <label>
                     Success URL
                 </label>
@@ -128,7 +150,7 @@
 
             <div class="form-row reusable-token-row">
                 <label>Reusable Token</label>
-                <input type="checkbox" id="chkReusable" />
+                <input type="checkbox" id="chkReusable" name="chkReusable" />
             </div>
 
             <div class="form-row no-apm">
@@ -137,8 +159,8 @@
             </div>
 
             <div class="form-row no-apm">
-                <label>Authorise Only</label>
-                <input type="checkbox" id="chkAuthoriseOnly" name="authoriseOnly" />
+                <label>Authorize Only</label>
+                <input type="checkbox" id="chkAuthorizeOnly" name="authorizeOnly" />
             </div>
 
             <div class="header">Billing address</div>
@@ -171,6 +193,11 @@
             <div class="form-row">
                 <label>Country Code</label>
                 <input type="text" id="country-code" name="countryCode" value="GB" />
+            </div>
+
+            <div class="form-row">
+                <label>Telephone Number</label>
+                <input type="text" id="telephone-number" name="telephone-number" value="" />
             </div>
 
             <div class="header">Delivery address</div>
@@ -228,11 +255,31 @@
                 <input type="text" id="delivery-country-code" name="delivery-countryCode" value="GB" />
             </div>
 
+            <div class="form-row">
+                <label>Telephone Number</label>
+                <input type="text" id="delivery-telephone-number" name="delivery-telephone-number" value="" />
+            </div>
+
             <div class="header">Other</div>
 
             <div class="form-row">
                 <label>Order Description</label>
                 <input type="text" id="description" name="description" value="My test order" />
+            </div>
+
+            <div class="form-row">
+                <label>Customer Order Code</label>
+                <input type="text" id="customer-order-code" name="customer-order-code" value="" />
+            </div>
+
+            <div class="form-row">
+                <label>Order Code Prefix</label>
+                <input type="text" id="order-code-prefix" name="order-code-prefix" value="" />
+            </div>
+
+            <div class="form-row">
+                <label>Order Code Suffix</label>
+                <input type="text" id="order-code-suffix" name="order-code-suffix" value="" />
             </div>
 
             <div class="form-row">
@@ -247,9 +294,14 @@
                 <input type="text" id="language-code" maxlength="2" data-worldpay="language-code" value="EN" />
             </div>
 
-             <div class="form-row">
+            <div class="form-row">
                 <label>Shopper Email</label>
                 <input type="text" id="shopper-email" name="shopper-email" value="shopper@email.com" />
+            </div>
+
+            <div class="form-row shopper-bank-code-row" style="display:none">
+                <label>Shopper Bank Code</label>
+                <input type="text" id="shopper-bank-code" name="shopper-bank-code" value="RABOBANK" />
             </div>
 
             <div class="form-row swift-code-row apm" style="display:none">
@@ -276,18 +328,74 @@
 
         <asp:Panel runat="server" ID="SuccessPanel" Visible="false">
             <h2>Response</h2>
-            <p>Order Code: <span id="order-code"><asp:Literal runat="server" ID="ResponseOrderCode" ViewStateMode="Disabled" /></span></p>
-            <p>Token: <span id="token"><asp:Literal runat="server" ID="ResponseToken" ViewStateMode="Disabled" /></span></p>
-            <p>Payment Status: <span id="payment-status"><asp:Literal runat="server" ID="ResponsePaymentStatus" ViewStateMode="Disabled" /></span></p>
-            <pre><asp:Literal runat="server" ID="ResponseJson" ViewStateMode="Disabled" /></pre>
-            <asp:Literal runat="server" ID="OrderResponse" ViewStateMode="Disabled"></asp:Literal>
+            <p>Order Code: <span id="order-code"><asp:Literal runat="server" ID="ResponseOrderCode" /></span></p>
+            <p>Token: <span id="token"><asp:Literal runat="server" ID="ResponseToken" /></span></p>
+            <p>Payment Status: <span id="payment-status"><asp:Literal runat="server" ID="ResponsePaymentStatus" /></span></p>
+            <pre><asp:Literal runat="server" ID="ResponseJson" /></pre>
+            <asp:Literal runat="server" ID="OrderResponse"></asp:Literal>
         </asp:Panel>
         <uc:ErrorControl ID="ErrorControl" runat="server"/>
 
     </form>
     <script type="text/javascript">
+
+        var showShopperBankCodeField = function () {
+            $('#shopper-bank-code').attr('data-worldpay-apm', 'shopperBankCode');
+            $('.shopper-bank-code-row').show();
+        };
+        var hideShopperBankCodeField = function () {
+            $('#shopper-bank-code').removeAttr('data-worldpay-apm');
+            $('.shopper-bank-code-row').hide();
+        };
+
+        var showSwiftCodeField = function () {
+            $('#swift-code').attr('data-worldpay-apm', 'swiftCode');
+            $('.swift-code-row').show();
+        }
+
+        var hideSwiftCodeField = function () {
+            $('#swift-code').removeAttr('data-worldpay-apm');
+            $('.swift-code-row').hide();
+        }
+
+        var showLanguageCodeField = function () {
+            $('#language-code').attr('data-worldpay', 'language-code');
+            $('.language-code-row').show();
+        }
+
+        var hideLanguageCodeField = function () {
+            $('#language-code').removeAttr('data-worldpay');
+            $('.language-code-row').hide();
+        }
+
+        var showReusableTokenField = function () {
+            $('.reusable-token-row').show();
+        }
+
+        var hideReusableTokenField = function () {
+            $('.reusable-token-row').hide();
+        }
+
         Worldpay.setClientKey('<%= Session["client_key"] %>');
-        Worldpay.api_path = '<%= Session["apiEndpoint"] %>';
+        Worldpay.api_path = '<%= Session["apiendpoint"] %>/';
+
+        // This is required as .NET 2.0 doesn't have ClientIDMode="static", so we can't set the form's id to anything
+        // other than "aspnetForm"
+        var form = document.getElementById('aspnetForm');
+
+        var _triggerWorldpayUseForm = function () {
+            Worldpay.useForm(form, function (status, response) {
+                if (response.error) {
+                    Worldpay.handleError(form, $('.payment-errors')[0], response.error);
+                } else {
+                    var token = response.token;
+                    Worldpay.formBuilder(form, 'input', 'hidden', 'token', token);
+                    form.submit();
+                }
+
+            });
+        };
+        _triggerWorldpayUseForm();
 
         $('#chkReusable').prop('checked', false);
         $('#chkReusable').change(function () {
@@ -299,33 +407,38 @@
             }
         });
 
-        var form = document.getElementById('paymentForm');
+        $('#direct-order').on('change', function () {
+            var isDirectOrder = $(this).val();
+            if (isDirectOrder == 1) {
+                form.onsubmit = null;
 
-        Worldpay.useForm(form, function (status, response) {
-            if (response.error) {
-                Worldpay.handleError(form, $('.payment-errors')[0], response.error);
-            } else {
-                var token = response.token;
-                Worldpay.formBuilder(form, 'input', 'hidden', 'token', token);
-                form.submit();
+                //add names to card form parameters
+                $('#card').attr('name', 'number');
+                $('#cvc').attr('name', 'cvc');
+                $('#expiration-month').attr('name', 'exp-month');
+                $('#expiration-year').attr('name', 'exp-year');
+                $('#apm-name').attr('name', 'apm-name');
+                $('#swift-code').attr('name', 'swiftCode');
+                $('#shopper-bank-code').attr('name', 'shopperBankCode');
+                $('#language-code').attr('name', 'language-code');           
             }
-
+            else {
+                $('#card, #cvc, #exp-month, #exp-year, #apm-name, #swiftCode, #shopperBankCode, #language-code').removeAttr('name');
+                _triggerWorldpayUseForm();
+            }
         });
-        
+
         $('#orderType').on('change', function () {
-
-            $('.language-code-row').show();
-
             if ($(this).val() == 'APM') {
                 Worldpay.tokenType = 'apm';
                 $('.apm').show();
                 $('.no-apm').hide();
 
-                //initialize swift code field
-                $('#swift-code').removeAttr('data-worldpay-apm');
-                $('.swift-code-row').hide();
-                $('.reusable-token-row').show();
-                $('#language-code').attr('data-worldpay', 'language-code');
+                //initialize fields
+                hideShopperBankCodeField();
+                hideSwiftCodeField();
+                showReusableTokenField();
+                showLanguageCodeField();
 
                 //handle attributes
                 $('#card').removeAttr('data-worldpay');
@@ -343,39 +456,70 @@
                 $('#expiration-year').attr('data-worldpay', 'exp-year');
                 $('#country-code').removeAttr('data-worldpay');
             }
-
         });
 
         $('#apm-name').on('change', function () {
-            if ($(this).val() == 'giropay') {
-                Worldpay.reusable = false;
-                $('#swift-code').attr('data-worldpay-apm', 'swiftCode');
-                $('.swift-code-row').show();
+            var _apmName = $(this).val();
 
-                //No language code for Giropay
-                $('#language-code').removeAttr('data-worldpay');
-                $('.language-code-row').hide();
+            hideSwiftCodeField();
+            hideShopperBankCodeField();
+            hideLanguageCodeField();
+            hideReusableTokenField();
 
-                //Reusable token option is not available for Giropay
-                $('.reusable-token-row').hide();
+            $('#country-code').val('GB');
+            $('#currency').val('GBP');
 
-                //Set acceptance currency to EUR
-                $('#currency').val('EUR');
+            switch (_apmName) {
+                case 'mistercash':
+                    showReusableTokenField();
+                    showLanguageCodeField();
+                    $('#country-code').val('BE');
+                    break;
+                case 'yandex':
+                case 'qiwi':
+                    showReusableTokenField();
+                    showLanguageCodeField();
+                    $('#country-code').val('RU');
+                    break;
+                case 'postepay':
+                    showReusableTokenField();
+                    showLanguageCodeField();
+                    $('#country-code').val('IT');
+                    break;
+                case 'alipay':
+                    showReusableTokenField();
+                    showLanguageCodeField();
+                    $('#country-code').val('CN');
+                    break;
+                case 'przelewy24':
+                    showReusableTokenField();
+                    showLanguageCodeField();
+                    $('#country-code').val('PL');
+                    break;
+                case 'sofort':
+                    showReusableTokenField();
+                    showLanguageCodeField();
+                    $('#country-code').val('DE');
+                    break;
+                case 'giropay':
+                    Worldpay.reusable = false;
+                    showSwiftCodeField();
+                    $('#currency').val('EUR');
+                    break;
+                case 'ideal':
+                    //reusable token field is available for all apms (except giropay)
+                    showReusableTokenField();
+                    //language code enabled for all apms (except giropay)
+                    showLanguageCodeField();
+                    //shopper bank code field is only available for ideal
+                    showShopperBankCodeField();
+                    break;
+                default:
+                    showReusableTokenField();
+                    showLanguageCodeField();
+                    break;
             }
-            else {
-                //we don't want to send swift code to the api if the apm is not Giropay
-                $('#swift-code').removeAttr('data-worldpay-apm');
-                $('.swift-code-row').hide();
-                $('.reusable-token-row').show();
 
-                //language code enabled by default
-                $('#language-code').attr('data-worldpay', 'language-code');
-                $('.language-code-row').show();
-
-                //Set acceptance currency to GBP
-                $('#currency').val('GBP');
-            }
         });
-
     </script>
 </asp:Content>

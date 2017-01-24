@@ -1,16 +1,14 @@
-﻿using System.Runtime.Serialization;
-
-namespace Worldpay.Sdk.Models
+﻿namespace Worldpay.Sdk.Models
 {
-    [DataContract]
     public class CardRequest : AbstractCard
     {
-        [DataMember]
+        public CardRequest()
+        {
+            this.type = "Card";
+        }
+
         public string cardNumber { get; set; }
 
-        [DataMember]
         public string cvc { get; set; }
-
-
     }
 }

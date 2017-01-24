@@ -65,4 +65,3 @@ C# ASP .NET sample application which demonstrates integration with Worldpay API.
 - Also in Web.config, set OrderLog to a location on your server which has read/write access permissions for your web server. In IIS on Windows, this usually means granting access to IUSR and IIS_IUSRS via the Windows Explorer folder properties dialog.
 - Visual Studio users can now be able to run the application simply by opening the page 'CreateOrder.aspx' and clicking the 'run' button from the toolbar.
 - To test credit card transactions via the IDE, simply fill out the details on the page and submit.
-

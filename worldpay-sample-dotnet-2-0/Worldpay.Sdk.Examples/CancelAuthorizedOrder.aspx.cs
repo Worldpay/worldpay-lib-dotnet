@@ -22,7 +22,7 @@ namespace Worldpay.Sdk.Examples
             try
             {
                 client.GetOrderService().CancelAuthorizedOrder(orderCode);
-                ServerResponse.Text = String.Format("Authorised order {0} has been cancelled", orderCode);
+                ServerResponse.Text = String.Format("Authorized order {0} has been cancelled", orderCode);
                 SuccessPanel.Visible = true;
             }
             catch (WorldpayException exc)
