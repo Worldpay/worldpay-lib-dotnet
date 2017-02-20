@@ -1,2 +1,6 @@
 packages/
 bin/
+TestResults/
+obj/
+*.suo
+*.user
