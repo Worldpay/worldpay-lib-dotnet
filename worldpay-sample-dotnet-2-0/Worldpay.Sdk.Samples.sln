@@ -1,12 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worldpay.Sdk.Examples", "Worldpay.Sdk.Examples\Worldpay.Sdk.Examples20.csproj", "{C1E26FE7-56C2-446D-A65A-830D8747758B}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.26206.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worldpay.Sdk.Examples20", "Worldpay.Sdk.Examples\Worldpay.Sdk.Examples20.csproj", "{C1E26FE7-56C2-446D-A65A-830D8747758B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6C59865C-07ED-4BD8-99D8-4A8BAE7BF16C}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worldpay.Sdk", "..\worldpay-lib-dotnet-2-0\Worldpay.Sdk\Worldpay.Sdk.csproj", "{D2AB0290-8B33-4467-A0DF-975372B29E38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +22,10 @@ Global
 		{C1E26FE7-56C2-446D-A65A-830D8747758B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1E26FE7-56C2-446D-A65A-830D8747758B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1E26FE7-56C2-446D-A65A-830D8747758B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2AB0290-8B33-4467-A0DF-975372B29E38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2AB0290-8B33-4467-A0DF-975372B29E38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2AB0290-8B33-4467-A0DF-975372B29E38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2AB0290-8B33-4467-A0DF-975372B29E38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
