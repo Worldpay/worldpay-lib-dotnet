@@ -158,7 +158,7 @@ namespace Worldpay.Sdk
                 if (data != null)
                 {
                     request.ContentType = ApplicationJson;
-                    string serializedData = JavaScriptConvert.SerializeObject(data);
+                    string serializedData = JsonConvert.SerializeObject(data);
                     byte[] bytes = Encoding.UTF8.GetBytes(serializedData);
                     request.ContentLength = bytes.Length;
 
@@ -225,7 +225,7 @@ namespace Worldpay.Sdk
                 try
                 {
                     string content = reader.ReadToEnd();
-                    error = JavaScriptConvert.DeserializeObject<ApiError>(content);
+                    error = JsonConvert.DeserializeObject<ApiError>(content);
                 }
                 catch (Exception)
                 {

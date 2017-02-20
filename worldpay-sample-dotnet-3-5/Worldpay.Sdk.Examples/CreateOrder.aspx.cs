@@ -57,7 +57,7 @@ namespace Worldpay.Sdk.Examples
 
             try
             {
-                custIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
+                custIdentifiers = JsonConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
 
             }
             catch (Exception exc) { }
@@ -192,7 +192,7 @@ namespace Worldpay.Sdk.Examples
 
             try
             {
-                custIdentifiers = JavaScriptConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
+                custIdentifiers = JsonConvert.DeserializeObject<Dictionary<string, string>>(form["customer-identifiers"]);
 
             }
             catch (Exception exc) { }
@@ -323,7 +323,7 @@ namespace Worldpay.Sdk.Examples
             ResponseOrderCode.Text = response.orderCode;
             ResponseToken.Text = response.token;
             ResponsePaymentStatus.Text = response.paymentStatus.ToString();
-            ResponseJson.Text = JavaScriptConvert.SerializeObject(response);
+            ResponseJson.Text = JsonConvert.SerializeObject(response);
         }
 
         private void HandleAPMResponse(OrderResponse response)

@@ -37,7 +37,7 @@ namespace Worldpay.Sdk.Examples
             ResultYear.Text = details.paymentMethod.expiryYear.ToString();
             ResultType.Text = details.paymentMethod.cardType;
             ResultCardNumber.Text = details.paymentMethod.maskedCardNumber;
-            ResponseJson.Text = JavaScriptConvert.SerializeObject(details);
+            ResponseJson.Text = JsonConvert.SerializeObject(details);
             SuccessPanel.Visible = true;
         }
     }

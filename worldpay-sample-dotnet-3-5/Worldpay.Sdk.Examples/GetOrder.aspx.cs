@@ -28,7 +28,7 @@ namespace Worldpay.Sdk.Examples
             try
             {
                 var response = client.GetOrderService().FindOrder(orderCode);
-                ServerResponse.Text = JavaScriptConvert.SerializeObject(response);
+                ServerResponse.Text = JsonConvert.SerializeObject(response);
                 SuccessPanel.Visible = true;
             }
             catch (WorldpayException exc)
