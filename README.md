@@ -6,6 +6,9 @@ This repository consists of four related projects:
 
 Each of these is contained in a separate directory / VS solution.
 
+#### Issues
+Please see our [support contact information]( https://developer.worldpay.com/jsonapi/faq/articles/how-can-i-contact-you-for-support) to raise an issue.
+
 worldpay-lib-dotnet-3-5 & 2-0
 -------------------
 
