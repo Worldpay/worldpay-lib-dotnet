@@ -48,6 +48,19 @@ try {
     Console.WriteLine("Error description: " + e.apiError.description);
     Console.WriteLine("Error message: " + e.apiError.message);
 }
+
+switch (orderResponse.paymentStatus)
+{
+    case OrderStatus.SUCCESS:
+        // Handle successful payment
+        break;
+	
+    case OrderStatus.FAILED:
+        // Handle failed payment
+        break;
+	
+    // Handle other statuses...
+}
 ```
 
 worldpay-sample-dotnet-3-5 & 2-0
