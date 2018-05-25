@@ -130,6 +130,8 @@ namespace Worldpay.Sdk
             request.Accept = ApplicationJson;
             request.Timeout = ConnectionTimeout;
 
+            request.Headers.Add("x-wp-client-user-agent", "NET-Client-3_5");
+
             switch (method)
             {
                 case RequestMethod.Get:
