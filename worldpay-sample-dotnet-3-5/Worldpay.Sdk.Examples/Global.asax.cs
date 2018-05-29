@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Configuration;
+using System.Net;
 using Configuration = Worldpay.Sdk.Configuration;
 
 namespace Worldpay.Sdk.Examples
 {
     public class Global : System.Web.HttpApplication
-    {
+    {       
 
         protected void Application_Start(object sender, EventArgs e)
         {
-
+            //Specifically use TLS1.2
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
         }
 
         protected void Session_Start(object sender, EventArgs e)
