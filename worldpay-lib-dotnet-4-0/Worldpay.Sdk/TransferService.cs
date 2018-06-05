@@ -28,7 +28,7 @@ namespace Worldpay.Sdk
         /// <returns></returns>
         public TransferResponse GetTransfers(string merchantId, int? pageNumber)
         {
-            var url = String.Format("{0}/transfers?merchantId={1}&pageNumber={2}", _baseUrl, merchantId, pageNumber);
+            var url = String.Format("{0}/transfers?merchantId={1}&page={2}", _baseUrl, merchantId, pageNumber);
             return Http.Get<TransferResponse>(url);
         }
 
