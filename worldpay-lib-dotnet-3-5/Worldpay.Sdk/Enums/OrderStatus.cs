@@ -14,6 +14,7 @@
         INFORMATION_SUPPLIED,
         CHARGED_BACK,
         EXPIRED,
-        CHARGEBACK_REVERSED
+        CHARGEBACK_REVERSED,
+        IN_PROGRESS
     }
 }
